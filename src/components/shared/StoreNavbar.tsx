@@ -13,27 +13,15 @@ import {
 } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { useStore } from "@/context/StoreContext";
-import { type Locale } from "@/locales";
-import { type CurrencyCode } from "@/types/store";
-
-const LOCALES: { code: Locale; label: string }[] = [
-  { code: "lo", label: "ລາວ" },
-  { code: "th", label: "ไทย" },
-  { code: "en", label: "EN" },
-];
-
-const CURRENCIES: CurrencyCode[] = ["LAK", "THB", "USD"];
 
 export function StoreNavbar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { locale, setLocale, dictionary } = useLanguage();
+  const { dictionary } = useLanguage();
   const {
     cartItemCount,
     orders,
     user,
-    currency,
-    setCurrency,
     searchQuery,
     setSearchQuery,
     setIsCartOpen,
@@ -50,7 +38,7 @@ export function StoreNavbar() {
     <header className="sticky top-0 z-40 w-full bg-card/90 backdrop-blur-xl border-b border-border transition-colors print:hidden">
       {/* Top Promo Strip */}
       <div className="bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600 text-white text-xs py-2 px-4">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 font-medium">
             <Sparkles className="w-3.5 h-3.5 text-amber-300 shrink-0" />
             <span>{dictionary.hero.promoBanner}</span>
@@ -60,41 +48,13 @@ export function StoreNavbar() {
             </span>
           </div>
 
-          <div className="flex items-center gap-3 ml-auto">
-            {/* Currency Switcher */}
-            <div className="flex items-center bg-white/15 rounded-lg p-0.5">
-              {CURRENCIES.map((cur) => (
-                <button
-                  key={cur}
-                  type="button"
-                  onClick={() => setCurrency(cur)}
-                  className={`px-2 py-0.5 rounded-md text-[11px] font-semibold transition-all cursor-pointer ${currency === cur
-                      ? "bg-white text-indigo-700 shadow-xs"
-                      : "text-white/85 hover:text-white"
-                    }`}
-                >
-                  {cur}
-                </button>
-              ))}
-            </div>
-
-            {/* Language Switcher */}
-            <div className="flex items-center bg-white/15 rounded-lg p-0.5">
-              {LOCALES.map((loc) => (
-                <button
-                  key={loc.code}
-                  type="button"
-                  onClick={() => setLocale(loc.code)}
-                  className={`px-2 py-0.5 rounded-md text-[11px] font-semibold transition-all cursor-pointer ${locale === loc.code
-                      ? "bg-white text-indigo-700 shadow-xs"
-                      : "text-white/85 hover:text-white"
-                    }`}
-                >
-                  {loc.label}
-                </button>
-              ))}
-            </div>
-          </div>
+          <Link
+            href="/settings"
+            className="flex items-center gap-1.5 text-[11px] font-medium text-white/90 hover:text-white bg-white/15 hover:bg-white/25 px-2.5 py-0.5 rounded-lg transition-colors ml-auto"
+          >
+            <SlidersHorizontal className="w-3 h-3" />
+            <span>{dictionary.nav.settings}</span>
+          </Link>
         </div>
       </div>
 
