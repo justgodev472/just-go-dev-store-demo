@@ -35,7 +35,7 @@ export function StoreNavbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-card/90 backdrop-blur-xl border-b border-border transition-colors print:hidden">
+    <header className="sticky top-0 z-[60] w-full bg-card/90 backdrop-blur-xl border-b border-border transition-colors print:hidden">
       {/* Top Promo Strip (Desktop only) */}
       <div className="hidden md:block bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600 text-white text-xs py-2 px-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
@@ -59,7 +59,7 @@ export function StoreNavbar() {
       </div>
 
       {/* Main Storefront Navbar */}
-      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 py-2.5 sm:py-3.5 flex items-center justify-between gap-3 sm:gap-4">
+      <div className="max-w-7xl mx-auto px-3.5 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-3 sm:gap-4">
         {/* Brand Logo */}
         <Link
           href="/shop"

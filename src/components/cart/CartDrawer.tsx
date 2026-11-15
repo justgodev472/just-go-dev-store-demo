@@ -74,15 +74,15 @@ export function CartDrawer() {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-xs animate-in fade-in duration-200 pb-[calc(4rem+env(safe-area-inset-bottom,0px))] md:pb-0"
+      className="fixed inset-x-0 top-14 bottom-0 md:inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-xs animate-in fade-in duration-200 pb-[calc(4rem+env(safe-area-inset-bottom,0px))] md:pb-0"
       onClick={() => setIsCartOpen(false)}
     >
       <div
         className="bg-card w-full max-w-md h-full border-l border-border shadow-2xl flex flex-col justify-between"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="p-5 border-b border-border flex items-center justify-between">
+        {/* Desktop Header (Hidden on mobile: mobile uses top StoreNavbar) */}
+        <div className="hidden md:flex p-5 border-b border-border items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
               <ShoppingBag className="w-5 h-5" />
@@ -116,6 +116,22 @@ export function CartDrawer() {
             </button>
           </div>
         </div>
+
+        {/* Mobile Sub-bar (Only when cart has items) */}
+        {cart.length > 0 && (
+          <div className="md:hidden px-4 py-2 border-b border-border flex items-center justify-between text-xs bg-secondary/30">
+            <span className="font-semibold text-muted-foreground">
+              {cart.length} {dictionary.orders.items}
+            </span>
+            <button
+              type="button"
+              onClick={clearCart}
+              className="text-xs text-rose-500 hover:underline cursor-pointer"
+            >
+              {dictionary.cart.clearCart}
+            </button>
+          </div>
+        )}
 
         {/* Free Shipping Progress Bar */}
         {cart.length > 0 && (

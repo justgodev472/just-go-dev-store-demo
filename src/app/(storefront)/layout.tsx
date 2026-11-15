@@ -37,7 +37,7 @@ export default function StorefrontLayout({
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <StoreNavbar />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-4 sm:py-8 pb-24 md:pb-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-3 sm:py-8 pb-2 sm:pb-6">
         {children}
       </main>
 

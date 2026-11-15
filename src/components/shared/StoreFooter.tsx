@@ -9,8 +9,8 @@ export function StoreFooter() {
   const { locale, dictionary } = useLanguage();
 
   return (
-    <footer className="border-t border-border bg-card/60 mt-16 print:hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-1 md:grid-cols-12 gap-8 text-xs sm:text-sm">
+    <footer className="border-t border-border bg-card/60 mt-4 sm:mt-12 print:hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10 pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))] md:pb-10 grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 text-xs sm:text-sm">
         <div className="md:col-span-6 space-y-3">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white flex items-center justify-center">
