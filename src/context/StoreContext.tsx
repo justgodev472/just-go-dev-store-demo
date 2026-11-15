@@ -126,15 +126,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   const setCurrency = (currency: CurrencyCode) => {
     updateStoreState((prev) => ({ ...prev, currency }));
-    showToast({
-      variant: "info",
-      title:
-        locale === "lo"
-          ? `ປ່ຽນສະກຸນເງິນເປັນ ${currency}`
-          : locale === "th"
-          ? `เปลี่ยนสกุลเงินเป็น ${currency}`
-          : `Switched currency to ${currency}`,
-    });
   };
 
   const login = (user: StoreUser) => {

@@ -2,7 +2,6 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { dictionaries, type Locale, type StoreDictionary } from "@/locales";
-import { useToast } from "@/context/ToastContext";
 
 interface LanguageContextValue {
   locale: Locale;
@@ -28,7 +27,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     }
     return "lo";
   });
-  const { showToast } = useToast();
 
   useEffect(() => {
     document.documentElement.lang = locale;
@@ -38,15 +36,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     setLocaleState(next);
     window.localStorage.setItem(LOCALE_KEY, next);
     document.documentElement.lang = next;
-    showToast({
-      variant: "info",
-      title:
-        next === "lo"
-          ? "ປ່ຽນພາສາເປັນ ພາສາລາວ (LO)"
-          : next === "th"
-          ? "เปลี่ยนภาษาเป็น ภาษาไทย (TH)"
-          : "Language switched to English (EN)",
-    });
   };
 
   return (

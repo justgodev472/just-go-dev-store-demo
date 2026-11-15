@@ -1,7 +1,6 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { useToast } from "@/context/ToastContext";
 
 type Theme = "light" | "dark";
 
@@ -29,7 +28,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }
     return "light";
   });
-  const { showToast } = useToast();
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
@@ -39,22 +37,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setThemeState(next);
     window.localStorage.setItem(THEME_KEY, next);
     document.documentElement.classList.toggle("dark", next === "dark");
-    const lang = document.documentElement.lang || "lo";
-    showToast({
-      variant: "info",
-      title:
-        next === "dark"
-          ? lang === "lo"
-            ? "ປ່ຽນເປັນໂໝດມືດ (Dark Mode)"
-            : lang === "th"
-            ? "เปลี่ยนเป็นโหมดมืด (Dark Mode)"
-            : "Switched to Dark Mode"
-          : lang === "lo"
-          ? "ປ່ຽນເປັນໂໝດແຈ້ງ (Light Mode)"
-          : lang === "th"
-          ? "เปลี่ยนเป็นโหมดสว่าง (Light Mode)"
-          : "Switched to Light Mode",
-    });
   };
 
   const toggleTheme = () => {

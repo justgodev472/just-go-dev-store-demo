@@ -12,6 +12,7 @@ import {
   Store,
   LogOut,
   ChevronDown,
+  Check,
 } from "lucide-react";
 import { INITIAL_STORE_CONFIG } from "@/data";
 import { type Locale } from "@/locales";
@@ -79,7 +80,7 @@ export function StoreSettingsView() {
               <Coins className="w-5 h-5" />
             </div>
             <div className="min-w-0">
-              <h3 className="font-bold text-sm sm:text-base text-foreground truncate">
+              <h3 className="font-medium text-sm sm:text-base text-foreground tracking-tight truncate">
                 {dictionary.settings.currencyTitle}
               </h3>
               <p className="text-xs text-muted-foreground truncate">
@@ -88,7 +89,7 @@ export function StoreSettingsView() {
             </div>
           </div>
           <div className="flex items-center gap-2.5 shrink-0 ml-3">
-            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-secondary text-foreground border border-border">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary text-foreground border border-border">
               {currentCurrency?.symbol} {currentCurrency?.code}
             </span>
             <ChevronDown
@@ -110,23 +111,39 @@ export function StoreSettingsView() {
                   onClick={() => setCurrency(cur.code)}
                   className={`w-full p-3 sm:p-3.5 rounded-2xl border flex items-center justify-between text-left transition-all cursor-pointer ${
                     active
-                      ? "border-foreground bg-foreground text-background font-bold shadow-xs"
-                      : "border-border bg-card text-foreground hover:border-foreground/40"
+                      ? "border-foreground/80 bg-secondary/50 text-foreground ring-1 ring-foreground/15 shadow-xs"
+                      : "border-border bg-card text-foreground hover:border-foreground/30 hover:bg-secondary/20"
                   }`}
                 >
-                  <div className="flex items-center gap-2.5">
+                  <div className="flex items-center gap-3">
                     <span
-                      className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-extrabold ${
+                      className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-semibold ${
                         active
-                          ? "bg-background text-foreground"
-                          : "bg-secondary text-muted-foreground"
+                          ? "bg-foreground text-background"
+                          : "bg-secondary text-muted-foreground border border-border"
                       }`}
                     >
                       {cur.symbol}
                     </span>
-                    <span className="text-xs sm:text-sm font-bold">{cur.name}</span>
+                    <span
+                      className={`text-xs sm:text-sm ${
+                        active
+                          ? "font-semibold text-foreground"
+                          : "font-normal text-foreground/90"
+                      }`}
+                    >
+                      {cur.name}
+                    </span>
                   </div>
-                  {active && <CheckCircle2 className="w-4 h-4 text-background" />}
+                  <div
+                    className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 transition-all ${
+                      active
+                        ? "bg-foreground text-background shadow-xs"
+                        : "border border-border bg-secondary/30"
+                    }`}
+                  >
+                    {active && <Check className="w-3 h-3 stroke-[3]" />}
+                  </div>
                 </button>
               );
             })}
@@ -152,7 +169,7 @@ export function StoreSettingsView() {
               <Globe className="w-5 h-5" />
             </div>
             <div className="min-w-0">
-              <h3 className="font-bold text-sm sm:text-base text-foreground truncate">
+              <h3 className="font-medium text-sm sm:text-base text-foreground tracking-tight truncate">
                 {dictionary.settings.languageTitle}
               </h3>
               <p className="text-xs text-muted-foreground truncate">
@@ -161,7 +178,7 @@ export function StoreSettingsView() {
             </div>
           </div>
           <div className="flex items-center gap-2.5 shrink-0 ml-3">
-            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-secondary text-foreground border border-border">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary text-foreground border border-border">
               {currentLanguage?.native}
             </span>
             <ChevronDown
@@ -183,21 +200,33 @@ export function StoreSettingsView() {
                   onClick={() => setLocale(lang.code)}
                   className={`w-full p-3 sm:p-3.5 rounded-2xl border flex items-center justify-between text-left transition-all cursor-pointer ${
                     active
-                      ? "border-foreground bg-foreground text-background font-bold shadow-xs"
-                      : "border-border bg-card text-foreground hover:border-foreground/40"
+                      ? "border-foreground/80 bg-secondary/50 text-foreground ring-1 ring-foreground/15 shadow-xs"
+                      : "border-border bg-card text-foreground hover:border-foreground/30 hover:bg-secondary/20"
                   }`}
                 >
                   <div>
-                    <div className="text-xs sm:text-sm font-bold">{lang.native}</div>
                     <div
-                      className={`text-[11px] ${
-                        active ? "text-background/80" : "text-muted-foreground"
+                      className={`text-xs sm:text-sm ${
+                        active
+                          ? "font-semibold text-foreground"
+                          : "font-normal text-foreground/90"
                       }`}
                     >
+                      {lang.native}
+                    </div>
+                    <div className="text-[11px] text-muted-foreground">
                       {lang.title}
                     </div>
                   </div>
-                  {active && <CheckCircle2 className="w-4 h-4 text-background" />}
+                  <div
+                    className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 transition-all ${
+                      active
+                        ? "bg-foreground text-background shadow-xs"
+                        : "border border-border bg-secondary/30"
+                    }`}
+                  >
+                    {active && <Check className="w-3 h-3 stroke-[3]" />}
+                  </div>
                 </button>
               );
             })}
@@ -227,7 +256,7 @@ export function StoreSettingsView() {
               )}
             </div>
             <div className="min-w-0">
-              <h3 className="font-bold text-sm sm:text-base text-foreground truncate">
+              <h3 className="font-medium text-sm sm:text-base text-foreground tracking-tight truncate">
                 {dictionary.settings.themeTitle}
               </h3>
               <p className="text-xs text-muted-foreground truncate">
@@ -236,7 +265,7 @@ export function StoreSettingsView() {
             </div>
           </div>
           <div className="flex items-center gap-2.5 shrink-0 ml-3">
-            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-secondary text-foreground border border-border">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary text-foreground border border-border">
               {theme === "dark"
                 ? dictionary.settings.darkMode
                 : dictionary.settings.lightMode}
@@ -254,33 +283,65 @@ export function StoreSettingsView() {
             <button
               type="button"
               onClick={() => setTheme("light")}
-              className={`w-full p-3.5 rounded-2xl border flex items-center justify-between text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              className={`w-full p-3 sm:p-3.5 rounded-2xl border flex items-center justify-between text-left transition-all cursor-pointer ${
                 theme === "light"
-                  ? "border-foreground bg-foreground text-background shadow-xs"
-                  : "border-border bg-card text-foreground hover:border-foreground/40"
+                  ? "border-foreground/80 bg-secondary/50 text-foreground ring-1 ring-foreground/15 shadow-xs"
+                  : "border-border bg-card text-foreground hover:border-foreground/30 hover:bg-secondary/20"
               }`}
             >
               <span className="flex items-center gap-2.5">
-                <Sun className="w-4 h-4" />
-                {dictionary.settings.lightMode}
+                <Sun className="w-4 h-4 text-foreground" />
+                <span
+                  className={`text-xs sm:text-sm ${
+                    theme === "light"
+                      ? "font-semibold text-foreground"
+                      : "font-normal text-foreground/90"
+                  }`}
+                >
+                  {dictionary.settings.lightMode}
+                </span>
               </span>
-              {theme === "light" && <CheckCircle2 className="w-4 h-4 text-background" />}
+              <div
+                className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 transition-all ${
+                  theme === "light"
+                    ? "bg-foreground text-background shadow-xs"
+                    : "border border-border bg-secondary/30"
+                }`}
+              >
+                {theme === "light" && <Check className="w-3 h-3 stroke-[3]" />}
+              </div>
             </button>
 
             <button
               type="button"
               onClick={() => setTheme("dark")}
-              className={`w-full p-3.5 rounded-2xl border flex items-center justify-between text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+              className={`w-full p-3 sm:p-3.5 rounded-2xl border flex items-center justify-between text-left transition-all cursor-pointer ${
                 theme === "dark"
-                  ? "border-foreground bg-foreground text-background shadow-xs"
-                  : "border-border bg-card text-foreground hover:border-foreground/40"
+                  ? "border-foreground/80 bg-secondary/50 text-foreground ring-1 ring-foreground/15 shadow-xs"
+                  : "border-border bg-card text-foreground hover:border-foreground/30 hover:bg-secondary/20"
               }`}
             >
               <span className="flex items-center gap-2.5">
-                <Moon className="w-4 h-4" />
-                {dictionary.settings.darkMode}
+                <Moon className="w-4 h-4 text-foreground" />
+                <span
+                  className={`text-xs sm:text-sm ${
+                    theme === "dark"
+                      ? "font-semibold text-foreground"
+                      : "font-normal text-foreground/90"
+                  }`}
+                >
+                  {dictionary.settings.darkMode}
+                </span>
               </span>
-              {theme === "dark" && <CheckCircle2 className="w-4 h-4 text-background" />}
+              <div
+                className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 transition-all ${
+                  theme === "dark"
+                    ? "bg-foreground text-background shadow-xs"
+                    : "border border-border bg-secondary/30"
+                }`}
+              >
+                {theme === "dark" && <Check className="w-3 h-3 stroke-[3]" />}
+              </div>
             </button>
           </div>
         )}
@@ -300,11 +361,11 @@ export function StoreSettingsView() {
           className="w-full p-4 sm:p-5 flex items-center justify-between text-left cursor-pointer transition-colors"
         >
           <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-            <div className="w-10 h-10 rounded-2xl bg-foreground text-background font-extrabold text-sm flex items-center justify-center shrink-0 shadow-xs">
+            <div className="w-10 h-10 rounded-2xl bg-foreground text-background font-semibold text-sm flex items-center justify-center shrink-0 shadow-xs">
               {user?.avatar ?? "JG"}
             </div>
             <div className="min-w-0">
-              <h3 className="font-bold text-sm sm:text-base text-foreground truncate">
+              <h3 className="font-medium text-sm sm:text-base text-foreground tracking-tight truncate">
                 {user?.name ?? dictionary.settings.accountTitle}
               </h3>
               <p className="text-xs text-muted-foreground truncate">
@@ -313,7 +374,7 @@ export function StoreSettingsView() {
             </div>
           </div>
           <div className="flex items-center gap-2.5 shrink-0 ml-3">
-            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-secondary text-foreground border border-border">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary text-foreground border border-border">
               {user?.role === "manager"
                 ? dictionary.auth.managerRole
                 : dictionary.auth.customerRole}
@@ -331,15 +392,15 @@ export function StoreSettingsView() {
             <div className="p-3.5 rounded-2xl bg-card border border-border text-xs space-y-2">
               <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">{dictionary.auth.emailLabel}:</span>
-                <span className="font-semibold text-foreground">{user?.email}</span>
+                <span className="font-medium text-foreground">{user?.email}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">Phone:</span>
-                <span className="font-semibold text-foreground">{user?.phone}</span>
+                <span className="font-medium text-foreground">{user?.phone}</span>
               </div>
               <div className="flex justify-between items-start gap-4">
                 <span className="text-muted-foreground shrink-0">Address:</span>
-                <span className="font-semibold text-foreground text-right">{user?.address}</span>
+                <span className="font-medium text-foreground text-right">{user?.address}</span>
               </div>
             </div>
 
@@ -350,7 +411,7 @@ export function StoreSettingsView() {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-foreground hover:bg-foreground/90 text-background font-bold text-xs sm:text-sm shadow-sm transition-all cursor-pointer shrink-0"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-foreground hover:bg-foreground/90 text-background font-medium text-xs sm:text-sm shadow-sm transition-all cursor-pointer shrink-0"
               >
                 <LogOut className="w-4 h-4" />
                 <span>{dictionary.nav.logout}</span>
@@ -378,7 +439,7 @@ export function StoreSettingsView() {
               <Store className="w-5 h-5" />
             </div>
             <div className="min-w-0">
-              <h3 className="font-bold text-sm sm:text-base text-foreground truncate">
+              <h3 className="font-medium text-sm sm:text-base text-foreground tracking-tight truncate">
                 {dictionary.settings.sandboxTitle}
               </h3>
               <p className="text-xs text-muted-foreground truncate">
@@ -387,7 +448,7 @@ export function StoreSettingsView() {
             </div>
           </div>
           <div className="flex items-center gap-2.5 shrink-0 ml-3">
-            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-secondary text-foreground border border-border">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary text-foreground border border-border">
               Reset
             </span>
             <ChevronDown
@@ -406,7 +467,7 @@ export function StoreSettingsView() {
             <button
               type="button"
               onClick={handleReset}
-              className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-xs sm:text-sm transition-all cursor-pointer ${
+              className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all cursor-pointer ${
                 resetDone
                   ? "bg-foreground text-background shadow-sm"
                   : "bg-secondary hover:bg-secondary/80 text-foreground border border-border"

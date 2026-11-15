@@ -73,7 +73,7 @@ export function MobileBottomNav() {
                 {/* Badge for Orders or Cart */}
                 {typeof item.badge === "number" && item.badge > 0 && (
                   <span
-                    className={`absolute -top-1 -right-2 px-1.5 py-0.2 text-[10px] font-extrabold rounded-full leading-tight shadow-xs ${
+                    className={`absolute -top-1 -right-2 px-1.5 py-0.2 text-[10px] font-semibold rounded-full leading-tight shadow-xs ${
                       item.isCart
                         ? "bg-primary text-primary-foreground"
                         : "bg-indigo-500/20 text-primary border border-indigo-500/30"
@@ -85,8 +85,8 @@ export function MobileBottomNav() {
               </div>
 
               <span
-                className={`text-[10px] font-semibold mt-0.5 tracking-tight ${
-                  isActive ? "text-primary font-bold" : "text-muted-foreground"
+                className={`text-[10px] font-medium mt-0.5 tracking-tight ${
+                  isActive ? "text-primary font-semibold" : "text-muted-foreground"
                 }`}
               >
                 {item.label}
