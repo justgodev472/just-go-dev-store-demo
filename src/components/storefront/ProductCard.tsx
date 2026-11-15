@@ -50,25 +50,25 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <div
       onClick={() => setQuickViewProduct(product)}
-      className="group bg-card rounded-2xl border border-border hover:border-primary/40 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden cursor-pointer"
+      className="group bg-card rounded-2xl border border-border hover:border-primary/40 shadow-2xs hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden cursor-pointer"
     >
       {/* Visual Header */}
       <div
-        className={`relative h-48 bg-gradient-to-br ${product.imageGradient} flex items-center justify-center p-6 overflow-hidden`}
+        className={`relative h-28 sm:h-44 bg-gradient-to-br ${product.imageGradient} flex items-center justify-center p-3 sm:p-6 overflow-hidden`}
       >
         <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
 
         {/* Top Badges */}
-        <div className="absolute top-3 left-3 flex items-center gap-1.5 z-10">
+        <div className="absolute top-2 left-2 sm:top-3 sm:left-3 flex items-center gap-1 sm:gap-1.5 z-10">
           {badgeLabel && (
             <span
-              className={`px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider shadow-xs ${badgeStyle}`}
+              className={`px-1.5 sm:px-2.5 py-0.2 sm:py-0.5 rounded-full text-[9px] sm:text-[11px] font-bold uppercase tracking-wider shadow-xs ${badgeStyle}`}
             >
               {badgeLabel}
             </span>
           )}
           {discountPercent > 0 && (
-            <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-white/90 text-slate-900 shadow-xs">
+            <span className="px-1.5 sm:px-2 py-0.2 sm:py-0.5 rounded-full text-[9px] sm:text-[11px] font-bold bg-white/90 text-slate-900 shadow-xs">
               -{discountPercent}%
             </span>
           )}
@@ -81,19 +81,19 @@ export function ProductCard({ product }: ProductCardProps) {
             e.stopPropagation();
             setQuickViewProduct(product);
           }}
-          className="absolute top-3 right-3 p-2 rounded-xl bg-white/20 hover:bg-white text-white hover:text-slate-900 backdrop-blur-md transition-all z-10 cursor-pointer"
+          className="absolute top-2 right-2 sm:top-3 sm:right-3 p-1.5 sm:p-2 rounded-xl bg-white/20 hover:bg-white text-white hover:text-slate-900 backdrop-blur-md transition-all z-10 cursor-pointer"
           title={dictionary.catalog.quickView}
         >
-          <Eye className="w-4 h-4" />
+          <Eye className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
         </button>
 
         {/* Center Icon Showcase */}
-        <div className="w-20 h-20 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
-          <ProductIcon name={product.iconName} className="w-10 h-10" />
+        <div className="w-12 h-12 sm:w-20 sm:h-20 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center text-white shadow-md sm:shadow-lg group-hover:scale-110 transition-transform duration-300">
+          <ProductIcon name={product.iconName} className="w-6 h-6 sm:w-10 sm:h-10" />
         </div>
 
-        {/* Bottom Specs Chips */}
-        <div className="absolute bottom-2.5 left-3 right-3 flex items-center gap-1.5 overflow-hidden">
+        {/* Bottom Specs Chips (Desktop only) */}
+        <div className="hidden sm:flex absolute bottom-2.5 left-3 right-3 items-center gap-1.5 overflow-hidden">
           {product.specs.slice(0, 2).map((spec) => (
             <span
               key={spec}
@@ -106,37 +106,37 @@ export function ProductCard({ product }: ProductCardProps) {
       </div>
 
       {/* Content Body */}
-      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-4">
-        <div className="space-y-2">
-          <div className="flex items-center justify-between text-xs text-muted-foreground">
-            <span className="font-mono text-[11px]">{product.sku}</span>
-            <span className="inline-flex items-center gap-1 font-semibold text-amber-500">
-              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+      <div className="p-3 sm:p-4 flex-1 flex flex-col justify-between space-y-2.5 sm:space-y-4">
+        <div className="space-y-1 sm:space-y-2">
+          <div className="flex items-center justify-between text-[10px] sm:text-xs text-muted-foreground">
+            <span className="font-mono text-[10px] sm:text-[11px]">{product.sku}</span>
+            <span className="inline-flex items-center gap-0.5 sm:gap-1 font-semibold text-amber-500">
+              <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-amber-400 text-amber-400" />
               {product.rating}
-              <span className="text-muted-foreground font-normal">
+              <span className="text-muted-foreground font-normal hidden sm:inline">
                 ({product.reviewsCount})
               </span>
             </span>
           </div>
 
-          <h3 className="font-bold text-base text-foreground group-hover:text-primary transition-colors line-clamp-1">
+          <h3 className="font-bold text-xs sm:text-base text-foreground group-hover:text-primary transition-colors line-clamp-1 leading-snug">
             {product.name[locale]}
           </h3>
 
-          <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
+          <p className="hidden sm:block text-xs text-muted-foreground line-clamp-2 leading-relaxed">
             {product.description[locale]}
           </p>
         </div>
 
-        <div className="pt-2 border-t border-border/60 space-y-3">
+        <div className="pt-1.5 sm:pt-2 border-t border-border/60 space-y-2 sm:space-y-3">
           {/* Price & Stock Row */}
-          <div className="flex items-baseline justify-between gap-2">
+          <div className="flex items-baseline justify-between gap-1 sm:gap-2">
             <div>
-              <div className="text-lg font-extrabold text-primary">
+              <div className="text-sm sm:text-lg font-extrabold text-primary leading-tight">
                 {formatPrice(product.price)}
               </div>
               {product.originalPrice && product.originalPrice > product.price && (
-                <div className="text-xs text-muted-foreground line-through">
+                <div className="text-[10px] sm:text-xs text-muted-foreground line-through">
                   {formatPrice(product.originalPrice)}
                 </div>
               )}
@@ -144,15 +144,15 @@ export function ProductCard({ product }: ProductCardProps) {
 
             <div className="text-right">
               {product.stock > 5 ? (
-                <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
-                  {dictionary.catalog.inStock} ({product.stock})
+                <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-md text-[9px] sm:text-[11px] font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                  {dictionary.catalog.inStock}
                 </span>
               ) : product.stock > 0 ? (
-                <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400">
-                  {dictionary.catalog.lowStock} ({product.stock})
+                <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-md text-[9px] sm:text-[11px] font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                  {dictionary.catalog.lowStock}
                 </span>
               ) : (
-                <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold bg-rose-500/10 text-rose-600 dark:text-rose-400">
+                <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-md text-[9px] sm:text-[11px] font-semibold bg-rose-500/10 text-rose-600 dark:text-rose-400">
                   {dictionary.catalog.outOfStock}
                 </span>
               )}
@@ -164,7 +164,7 @@ export function ProductCard({ product }: ProductCardProps) {
             type="button"
             disabled={product.stock <= 0}
             onClick={handleAdd}
-            className={`w-full py-2.5 px-4 rounded-xl font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
+            className={`w-full py-2 sm:py-2.5 px-2.5 sm:px-4 rounded-xl font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 transition-all cursor-pointer ${
               justAdded
                 ? "bg-emerald-600 text-white"
                 : product.stock <= 0
@@ -174,13 +174,13 @@ export function ProductCard({ product }: ProductCardProps) {
           >
             {justAdded ? (
               <>
-                <Check className="w-4 h-4" />
-                <span>{dictionary.catalog.added}</span>
+                <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                <span className="truncate">{dictionary.catalog.added}</span>
               </>
             ) : (
               <>
-                <ShoppingCart className="w-4 h-4" />
-                <span>{dictionary.catalog.addToCart}</span>
+                <ShoppingCart className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                <span className="truncate">{dictionary.catalog.addToCart}</span>
               </>
             )}
           </button>

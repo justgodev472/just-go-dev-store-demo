@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useStore } from "@/context/StoreContext";
 import { StoreNavbar } from "@/components/shared/StoreNavbar";
 import { StoreFooter } from "@/components/shared/StoreFooter";
+import { MobileBottomNav } from "@/components/shared/MobileBottomNav";
 import { ProductQuickViewModal } from "@/components/storefront/ProductQuickViewModal";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { CheckoutModal } from "@/components/checkout/CheckoutModal";
@@ -36,11 +37,14 @@ export default function StorefrontLayout({
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <StoreNavbar />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-4 sm:py-8 pb-24 md:pb-8">
         {children}
       </main>
 
       <StoreFooter />
+
+      {/* Mobile App Bottom Navigation Bar */}
+      <MobileBottomNav />
 
       {/* Storefront Interactive Modals & Drawers */}
       <ProductQuickViewModal />

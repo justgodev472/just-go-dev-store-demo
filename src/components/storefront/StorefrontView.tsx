@@ -78,7 +78,7 @@ export function StorefrontView({
       <div ref={catalogRef} className="space-y-4 pt-2">
         <div className="flex flex-wrap items-center justify-between gap-4">
           {/* Category Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 no-scrollbar">
+          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none w-full sm:w-auto">
             {CATEGORIES.map((cat) => {
               const isActive = selectedCategory === cat.id;
               return (
@@ -86,13 +86,13 @@ export function StorefrontView({
                   key={cat.id}
                   type="button"
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                  className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all cursor-pointer ${
                     isActive
                       ? "bg-primary text-primary-foreground shadow-md shadow-indigo-500/20"
                       : "bg-card hover:bg-secondary text-foreground border border-border"
                   }`}
                 >
-                  <ProductIcon name={cat.iconName} className="w-4 h-4" />
+                  <ProductIcon name={cat.iconName} className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   <span>{cat.name[locale]}</span>
                 </button>
               );
@@ -132,9 +132,9 @@ export function StorefrontView({
           </div>
         </div>
 
-        {/* Product Grid */}
+        {/* Product Grid - 2 cols on mobile, 3 on tablet, 4 on desktop */}
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-5">
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
