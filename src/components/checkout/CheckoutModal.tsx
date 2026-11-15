@@ -83,7 +83,7 @@ export function CheckoutModal({ onOrderCompleted }: CheckoutModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pb-20 md:pb-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
       <div className="bg-card w-full max-w-xl rounded-3xl border border-border shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
         {/* Header */}
         <div className="p-6 border-b border-border flex items-center justify-between">

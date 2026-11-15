@@ -90,15 +90,15 @@ export function StoreNavbar() {
           </div>
         </Link>
 
-        {/* Live Search Bar */}
-        <div className="relative flex-1 max-w-md min-w-0">
-          <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+        {/* Desktop Live Search Bar (On mobile, search is moved to storefront main view) */}
+        <div className="hidden md:block relative flex-1 max-w-md min-w-0">
+          <Search className="w-4 h-4 text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => handleSearchInput(e.target.value)}
             placeholder={dictionary.nav.searchPlaceholder}
-            className="w-full pl-8 sm:pl-10 pr-8 sm:pr-9 py-1.5 sm:py-2 text-xs sm:text-sm bg-secondary/70 hover:bg-secondary focus:bg-card rounded-xl border border-border focus:border-primary focus:outline-none transition-all placeholder:text-[11px] sm:placeholder:text-sm"
+            className="w-full pl-10 pr-9 py-2 text-sm bg-secondary/70 hover:bg-secondary focus:bg-card rounded-xl border border-border focus:border-primary focus:outline-none transition-all placeholder:text-sm"
           />
           {searchQuery && (
             <button
@@ -106,20 +106,21 @@ export function StoreNavbar() {
               onClick={() => handleSearchInput("")}
               className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground p-1 cursor-pointer"
             >
-              <X className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+              <X className="w-3.5 h-3.5" />
             </button>
           )}
         </div>
 
-        {/* Desktop Navigation Links & Cart (Hidden on Mobile, moved to MobileBottomNav) */}
+        {/* Desktop Navigation Links & Cart (Hidden on Mobile, handled by MobileBottomNav) */}
         <div className="hidden md:flex items-center gap-1.5 sm:gap-2">
           <nav className="flex items-center bg-secondary/60 p-1 rounded-xl border border-border/60">
             <Link
               href="/shop"
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all ${pathname === "/shop"
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all ${
+                pathname === "/shop"
                   ? "bg-card text-primary shadow-xs font-semibold"
                   : "text-muted-foreground hover:text-foreground"
-                }`}
+              }`}
             >
               <ShoppingBag className="w-4 h-4" />
               <span>{dictionary.nav.shop}</span>
@@ -127,10 +128,11 @@ export function StoreNavbar() {
 
             <Link
               href="/orders"
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all ${pathname === "/orders"
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all ${
+                pathname === "/orders"
                   ? "bg-card text-primary shadow-xs font-semibold"
                   : "text-muted-foreground hover:text-foreground"
-                }`}
+              }`}
             >
               <PackageCheck className="w-4 h-4" />
               <span>{dictionary.nav.orders}</span>
@@ -141,10 +143,11 @@ export function StoreNavbar() {
 
             <Link
               href="/settings"
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all ${pathname === "/settings"
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all ${
+                pathname === "/settings"
                   ? "bg-card text-primary shadow-xs font-semibold"
                   : "text-muted-foreground hover:text-foreground"
-                }`}
+              }`}
             >
               <SlidersHorizontal className="w-4 h-4" />
               <span>{dictionary.nav.settings}</span>
@@ -179,21 +182,6 @@ export function StoreNavbar() {
             </Link>
           )}
         </div>
-
-        {/* Mobile Quick Cart Button (Header right) */}
-        <button
-          type="button"
-          onClick={() => setIsCartOpen(true)}
-          className="md:hidden relative flex items-center justify-center p-2 rounded-xl bg-primary text-primary-foreground shadow-sm cursor-pointer shrink-0"
-          aria-label="View Cart"
-        >
-          <ShoppingBag className="w-4 h-4" />
-          {cartItemCount > 0 && (
-            <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-rose-500 text-white font-bold text-[10px] flex items-center justify-center leading-none shadow-xs">
-              {cartItemCount}
-            </span>
-          )}
-        </button>
       </div>
     </header>
   );

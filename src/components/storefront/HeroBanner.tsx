@@ -46,16 +46,16 @@ export function HeroBanner({
 
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-center">
         <div className="lg:col-span-8 space-y-3.5 sm:space-y-5">
-          <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs font-medium text-indigo-200">
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>{dictionary.hero.badge}</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs font-medium text-indigo-200 max-w-full">
+            <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+            <span className="truncate">{dictionary.hero.badge}</span>
           </div>
 
-          <h1 className="text-xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
+          <h1 className="text-xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight break-words">
             {dictionary.hero.title}
           </h1>
 
-          <p className="text-xs sm:text-base text-slate-300 max-w-2xl leading-relaxed">
+          <p className="text-xs sm:text-base text-slate-300 max-w-2xl leading-relaxed break-words">
             {dictionary.hero.subtitle}
           </p>
 
@@ -82,7 +82,7 @@ export function HeroBanner({
             <button
               type="button"
               onClick={handleCopyPromo}
-              className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-4 sm:py-3 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-400/30 text-indigo-100 text-[11px] sm:text-xs font-semibold transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-4 sm:py-3 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-400/30 text-indigo-100 text-[11px] sm:text-xs font-semibold transition-all cursor-pointer shrink-0"
             >
               <span className="font-mono font-bold text-amber-300">
                 JUSTGODEV10
@@ -103,35 +103,35 @@ export function HeroBanner({
           </div>
         </div>
 
-        {/* Highlights Cards (Responsive: 3 columns on mobile, stack on desktop) */}
-        <div className="lg:col-span-4 grid grid-cols-3 lg:grid-cols-1 gap-2 sm:gap-3">
-          <div className="flex flex-col sm:flex-row items-center sm:items-center gap-1.5 sm:gap-3.5 p-2 sm:p-4 rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 text-center sm:text-left">
-            <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-indigo-500/30 flex items-center justify-center text-indigo-200 shrink-0">
-              <Zap className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
+        {/* Highlights: Horizontal touch-scroll on mobile, stacked on desktop */}
+        <div className="lg:col-span-4 flex lg:flex-col gap-2 sm:gap-3 overflow-x-auto scrollbar-none [&::-webkit-scrollbar]:hidden touch-pan-x -mx-1 px-1 lg:mx-0 lg:px-0">
+          <div className="shrink-0 flex items-center gap-2.5 sm:gap-3.5 p-2.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-md border border-white/10">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-indigo-500/30 flex items-center justify-center text-indigo-200 shrink-0">
+              <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div>
-              <p className="text-[10px] sm:text-xs text-indigo-200 font-medium">12+ Items</p>
-              <p className="text-[11px] sm:text-sm font-bold truncate">{dictionary.hero.statsProducts}</p>
+              <p className="text-[10px] sm:text-xs text-indigo-200 font-medium hidden sm:block">12+ Items</p>
+              <p className="text-xs sm:text-sm font-bold whitespace-nowrap text-white">{dictionary.hero.statsProducts}</p>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center sm:items-center gap-1.5 sm:gap-3.5 p-2 sm:p-4 rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 text-center sm:text-left">
-            <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-emerald-500/30 flex items-center justify-center text-emerald-200 shrink-0">
-              <Truck className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
+          <div className="shrink-0 flex items-center gap-2.5 sm:gap-3.5 p-2.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-md border border-white/10">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-emerald-500/30 flex items-center justify-center text-emerald-200 shrink-0">
+              <Truck className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div>
-              <p className="text-[10px] sm:text-xs text-emerald-200 font-medium">Fast Express</p>
-              <p className="text-[11px] sm:text-sm font-bold truncate">{dictionary.hero.statsDelivery}</p>
+              <p className="text-[10px] sm:text-xs text-emerald-200 font-medium hidden sm:block">Fast Express</p>
+              <p className="text-xs sm:text-sm font-bold whitespace-nowrap text-white">{dictionary.hero.statsDelivery}</p>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center sm:items-center gap-1.5 sm:gap-3.5 p-2 sm:p-4 rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 text-center sm:text-left">
-            <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-amber-500/30 flex items-center justify-center text-amber-200 shrink-0">
-              <ShieldCheck className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
+          <div className="shrink-0 flex items-center gap-2.5 sm:gap-3.5 p-2.5 sm:p-4 rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-md border border-white/10">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-amber-500/30 flex items-center justify-center text-amber-200 shrink-0">
+              <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div>
-              <p className="text-[10px] sm:text-xs text-amber-200 font-medium">Official</p>
-              <p className="text-[11px] sm:text-sm font-bold truncate">{dictionary.hero.statsWarranty}</p>
+              <p className="text-[10px] sm:text-xs text-amber-200 font-medium hidden sm:block">Official</p>
+              <p className="text-xs sm:text-sm font-bold whitespace-nowrap text-white">{dictionary.hero.statsWarranty}</p>
             </div>
           </div>
         </div>

@@ -47,7 +47,7 @@ export function ProductQuickViewModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pb-20 md:pb-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
       <div className="bg-card w-full max-w-3xl rounded-3xl border border-border shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-12 relative">
         <button
           type="button"

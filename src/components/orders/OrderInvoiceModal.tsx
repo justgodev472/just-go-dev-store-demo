@@ -17,7 +17,7 @@ export function OrderInvoiceModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pb-20 md:pb-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
       <div className="bg-card w-full max-w-lg rounded-3xl border border-border shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Top Modal Action Bar (Hidden on print) */}
         <div className="p-4 border-b border-border flex items-center justify-between bg-secondary/40 print:hidden">

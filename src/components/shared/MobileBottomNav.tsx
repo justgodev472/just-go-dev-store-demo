@@ -15,41 +15,42 @@ import { useStore } from "@/context/StoreContext";
 export function MobileBottomNav() {
   const pathname = usePathname();
   const { dictionary } = useLanguage();
-  const { cartItemCount, orders, setIsCartOpen } = useStore();
+  const { cartItemCount, orders, isCartOpen, setIsCartOpen } = useStore();
 
   const navItems = [
     {
       href: "/shop",
       label: dictionary.nav.shop,
       icon: ShoppingBag,
-      active: pathname === "/shop",
+      active: !isCartOpen && pathname === "/shop",
     },
     {
       href: "/orders",
       label: dictionary.nav.orders,
       icon: PackageCheck,
       badge: orders.length,
-      active: pathname === "/orders",
+      active: !isCartOpen && pathname === "/orders",
     },
     {
-      action: () => setIsCartOpen(true),
+      action: () => setIsCartOpen(!isCartOpen),
       label: dictionary.nav.cart,
       icon: ShoppingCart,
       badge: cartItemCount,
       isCart: true,
+      active: isCartOpen,
     },
     {
       href: "/settings",
       label: dictionary.nav.settings,
       icon: SlidersHorizontal,
-      active: pathname === "/settings",
+      active: !isCartOpen && pathname === "/settings",
     },
   ];
 
   return (
     <nav
       aria-label="Mobile Navigation"
-      className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-card/95 backdrop-blur-xl border-t border-border shadow-2xl pb-[env(safe-area-inset-bottom,0px)]"
+      className="md:hidden fixed bottom-0 left-0 right-0 z-[60] bg-card/95 backdrop-blur-xl border-t border-border shadow-2xl pb-[env(safe-area-inset-bottom,0px)]"
     >
       <div className="grid grid-cols-4 h-16 items-center px-1">
         {navItems.map((item, idx) => {
@@ -110,6 +111,9 @@ export function MobileBottomNav() {
             <Link
               key={idx}
               href={item.href!}
+              onClick={() => {
+                if (isCartOpen) setIsCartOpen(false);
+              }}
               className="h-full flex items-center justify-center cursor-pointer"
             >
               {content}

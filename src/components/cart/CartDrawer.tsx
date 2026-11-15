@@ -73,8 +73,14 @@ export function CartDrawer() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="bg-card w-full max-w-md h-full border-l border-border shadow-2xl flex flex-col justify-between">
+    <div
+      className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-xs animate-in fade-in duration-200 pb-[calc(4rem+env(safe-area-inset-bottom,0px))] md:pb-0"
+      onClick={() => setIsCartOpen(false)}
+    >
+      <div
+        className="bg-card w-full max-w-md h-full border-l border-border shadow-2xl flex flex-col justify-between"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Header */}
         <div className="p-5 border-b border-border flex items-center justify-between">
           <div className="flex items-center gap-2.5">
