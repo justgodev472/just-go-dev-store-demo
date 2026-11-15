@@ -61,12 +61,12 @@ export function StoreSettingsView() {
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-3 sm:space-y-4">
-      {/* 1. Currency Section */}
+      {/* 1. Currency Section (Monochrome Black & White) */}
       <div
         className={`bg-card rounded-2xl sm:rounded-3xl border transition-all shadow-xs overflow-hidden ${
           openSection === "currency"
-            ? "border-primary/50 shadow-md shadow-indigo-500/5"
-            : "border-border hover:border-border/80"
+            ? "border-foreground/50 shadow-sm"
+            : "border-border hover:border-foreground/30"
         }`}
       >
         <button
@@ -75,7 +75,7 @@ export function StoreSettingsView() {
           className="w-full p-4 sm:p-5 flex items-center justify-between text-left cursor-pointer transition-colors"
         >
           <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-2xl bg-secondary text-foreground border border-border flex items-center justify-center shrink-0">
               <Coins className="w-5 h-5" />
             </div>
             <div className="min-w-0">
@@ -88,19 +88,19 @@ export function StoreSettingsView() {
             </div>
           </div>
           <div className="flex items-center gap-2.5 shrink-0 ml-3">
-            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-secondary text-foreground border border-border">
               {currentCurrency?.symbol} {currentCurrency?.code}
             </span>
             <ChevronDown
               className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
-                openSection === "currency" ? "rotate-180 text-primary" : ""
+                openSection === "currency" ? "rotate-180 text-foreground" : ""
               }`}
             />
           </div>
         </button>
 
         {openSection === "currency" && (
-          <div className="p-4 sm:p-5 pt-1 sm:pt-1 border-t border-border/60 bg-secondary/15 animate-in fade-in slide-in-from-top-1 duration-200 space-y-2">
+          <div className="p-4 sm:p-5 pt-1 sm:pt-1 border-t border-border/60 bg-secondary/20 animate-in fade-in slide-in-from-top-1 duration-200 space-y-2">
             {CURRENCIES.map((cur) => {
               const active = currency === cur.code;
               return (
@@ -110,15 +110,15 @@ export function StoreSettingsView() {
                   onClick={() => setCurrency(cur.code)}
                   className={`w-full p-3 sm:p-3.5 rounded-2xl border flex items-center justify-between text-left transition-all cursor-pointer ${
                     active
-                      ? "border-primary bg-primary/10 text-primary font-bold shadow-xs"
-                      : "border-border bg-card text-foreground hover:border-primary/40"
+                      ? "border-foreground bg-foreground text-background font-bold shadow-xs"
+                      : "border-border bg-card text-foreground hover:border-foreground/40"
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
                     <span
                       className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-extrabold ${
                         active
-                          ? "bg-primary text-primary-foreground"
+                          ? "bg-background text-foreground"
                           : "bg-secondary text-muted-foreground"
                       }`}
                     >
@@ -126,7 +126,7 @@ export function StoreSettingsView() {
                     </span>
                     <span className="text-xs sm:text-sm font-bold">{cur.name}</span>
                   </div>
-                  {active && <CheckCircle2 className="w-4 h-4 text-primary" />}
+                  {active && <CheckCircle2 className="w-4 h-4 text-background" />}
                 </button>
               );
             })}
@@ -134,12 +134,12 @@ export function StoreSettingsView() {
         )}
       </div>
 
-      {/* 2. Language Section */}
+      {/* 2. Language Section (Monochrome Black & White) */}
       <div
         className={`bg-card rounded-2xl sm:rounded-3xl border transition-all shadow-xs overflow-hidden ${
           openSection === "language"
-            ? "border-primary/50 shadow-md shadow-indigo-500/5"
-            : "border-border hover:border-border/80"
+            ? "border-foreground/50 shadow-sm"
+            : "border-border hover:border-foreground/30"
         }`}
       >
         <button
@@ -148,7 +148,7 @@ export function StoreSettingsView() {
           className="w-full p-4 sm:p-5 flex items-center justify-between text-left cursor-pointer transition-colors"
         >
           <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-            <div className="w-10 h-10 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-2xl bg-secondary text-foreground border border-border flex items-center justify-center shrink-0">
               <Globe className="w-5 h-5" />
             </div>
             <div className="min-w-0">
@@ -161,19 +161,19 @@ export function StoreSettingsView() {
             </div>
           </div>
           <div className="flex items-center gap-2.5 shrink-0 ml-3">
-            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-secondary text-foreground border border-border">
               {currentLanguage?.native}
             </span>
             <ChevronDown
               className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
-                openSection === "language" ? "rotate-180 text-primary" : ""
+                openSection === "language" ? "rotate-180 text-foreground" : ""
               }`}
             />
           </div>
         </button>
 
         {openSection === "language" && (
-          <div className="p-4 sm:p-5 pt-1 sm:pt-1 border-t border-border/60 bg-secondary/15 animate-in fade-in slide-in-from-top-1 duration-200 space-y-2">
+          <div className="p-4 sm:p-5 pt-1 sm:pt-1 border-t border-border/60 bg-secondary/20 animate-in fade-in slide-in-from-top-1 duration-200 space-y-2">
             {LANGUAGES.map((lang) => {
               const active = locale === lang.code;
               return (
@@ -183,17 +183,21 @@ export function StoreSettingsView() {
                   onClick={() => setLocale(lang.code)}
                   className={`w-full p-3 sm:p-3.5 rounded-2xl border flex items-center justify-between text-left transition-all cursor-pointer ${
                     active
-                      ? "border-primary bg-primary/10 text-primary font-bold shadow-xs"
-                      : "border-border bg-card text-foreground hover:border-primary/40"
+                      ? "border-foreground bg-foreground text-background font-bold shadow-xs"
+                      : "border-border bg-card text-foreground hover:border-foreground/40"
                   }`}
                 >
                   <div>
                     <div className="text-xs sm:text-sm font-bold">{lang.native}</div>
-                    <div className="text-[11px] text-muted-foreground">
+                    <div
+                      className={`text-[11px] ${
+                        active ? "text-background/80" : "text-muted-foreground"
+                      }`}
+                    >
                       {lang.title}
                     </div>
                   </div>
-                  {active && <CheckCircle2 className="w-4 h-4 text-primary" />}
+                  {active && <CheckCircle2 className="w-4 h-4 text-background" />}
                 </button>
               );
             })}
@@ -201,12 +205,12 @@ export function StoreSettingsView() {
         )}
       </div>
 
-      {/* 3. Appearance (Theme) Section */}
+      {/* 3. Appearance (Theme) Section (Monochrome Black & White) */}
       <div
         className={`bg-card rounded-2xl sm:rounded-3xl border transition-all shadow-xs overflow-hidden ${
           openSection === "theme"
-            ? "border-primary/50 shadow-md shadow-indigo-500/5"
-            : "border-border hover:border-border/80"
+            ? "border-foreground/50 shadow-sm"
+            : "border-border hover:border-foreground/30"
         }`}
       >
         <button
@@ -215,7 +219,7 @@ export function StoreSettingsView() {
           className="w-full p-4 sm:p-5 flex items-center justify-between text-left cursor-pointer transition-colors"
         >
           <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-            <div className="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-2xl bg-secondary text-foreground border border-border flex items-center justify-center shrink-0">
               {theme === "dark" ? (
                 <Moon className="w-5 h-5" />
               ) : (
@@ -232,35 +236,35 @@ export function StoreSettingsView() {
             </div>
           </div>
           <div className="flex items-center gap-2.5 shrink-0 ml-3">
-            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-secondary text-foreground border border-border">
               {theme === "dark"
                 ? dictionary.settings.darkMode
                 : dictionary.settings.lightMode}
             </span>
             <ChevronDown
               className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
-                openSection === "theme" ? "rotate-180 text-primary" : ""
+                openSection === "theme" ? "rotate-180 text-foreground" : ""
               }`}
             />
           </div>
         </button>
 
         {openSection === "theme" && (
-          <div className="p-4 sm:p-5 pt-1 sm:pt-1 border-t border-border/60 bg-secondary/15 animate-in fade-in slide-in-from-top-1 duration-200 space-y-2">
+          <div className="p-4 sm:p-5 pt-1 sm:pt-1 border-t border-border/60 bg-secondary/20 animate-in fade-in slide-in-from-top-1 duration-200 space-y-2">
             <button
               type="button"
               onClick={() => setTheme("light")}
               className={`w-full p-3.5 rounded-2xl border flex items-center justify-between text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                 theme === "light"
-                  ? "border-primary bg-primary/10 text-primary shadow-xs"
-                  : "border-border bg-card text-foreground"
+                  ? "border-foreground bg-foreground text-background shadow-xs"
+                  : "border-border bg-card text-foreground hover:border-foreground/40"
               }`}
             >
               <span className="flex items-center gap-2.5">
-                <Sun className="w-4 h-4 text-amber-500" />
+                <Sun className="w-4 h-4" />
                 {dictionary.settings.lightMode}
               </span>
-              {theme === "light" && <CheckCircle2 className="w-4 h-4 text-primary" />}
+              {theme === "light" && <CheckCircle2 className="w-4 h-4 text-background" />}
             </button>
 
             <button
@@ -268,26 +272,26 @@ export function StoreSettingsView() {
               onClick={() => setTheme("dark")}
               className={`w-full p-3.5 rounded-2xl border flex items-center justify-between text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                 theme === "dark"
-                  ? "border-primary bg-primary/10 text-primary shadow-xs"
-                  : "border-border bg-card text-foreground"
+                  ? "border-foreground bg-foreground text-background shadow-xs"
+                  : "border-border bg-card text-foreground hover:border-foreground/40"
               }`}
             >
               <span className="flex items-center gap-2.5">
-                <Moon className="w-4 h-4 text-indigo-400" />
+                <Moon className="w-4 h-4" />
                 {dictionary.settings.darkMode}
               </span>
-              {theme === "dark" && <CheckCircle2 className="w-4 h-4 text-primary" />}
+              {theme === "dark" && <CheckCircle2 className="w-4 h-4 text-background" />}
             </button>
           </div>
         )}
       </div>
 
-      {/* 4. Account & Profile Section */}
+      {/* 4. Account & Profile Section (Monochrome Black & White) */}
       <div
         className={`bg-card rounded-2xl sm:rounded-3xl border transition-all shadow-xs overflow-hidden ${
           openSection === "account"
-            ? "border-primary/50 shadow-md shadow-indigo-500/5"
-            : "border-border hover:border-border/80"
+            ? "border-foreground/50 shadow-sm"
+            : "border-border hover:border-foreground/30"
         }`}
       >
         <button
@@ -296,7 +300,7 @@ export function StoreSettingsView() {
           className="w-full p-4 sm:p-5 flex items-center justify-between text-left cursor-pointer transition-colors"
         >
           <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-            <div className="w-10 h-10 rounded-2xl bg-indigo-600 text-white font-extrabold text-sm flex items-center justify-center shrink-0 shadow-md shadow-indigo-500/20">
+            <div className="w-10 h-10 rounded-2xl bg-foreground text-background font-extrabold text-sm flex items-center justify-center shrink-0 shadow-xs">
               {user?.avatar ?? "JG"}
             </div>
             <div className="min-w-0">
@@ -309,21 +313,21 @@ export function StoreSettingsView() {
             </div>
           </div>
           <div className="flex items-center gap-2.5 shrink-0 ml-3">
-            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-indigo-500/10 text-primary border border-indigo-500/20">
+            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-secondary text-foreground border border-border">
               {user?.role === "manager"
                 ? dictionary.auth.managerRole
                 : dictionary.auth.customerRole}
             </span>
             <ChevronDown
               className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
-                openSection === "account" ? "rotate-180 text-primary" : ""
+                openSection === "account" ? "rotate-180 text-foreground" : ""
               }`}
             />
           </div>
         </button>
 
         {openSection === "account" && (
-          <div className="p-4 sm:p-5 pt-3 border-t border-border/60 bg-secondary/15 animate-in fade-in slide-in-from-top-1 duration-200 space-y-4">
+          <div className="p-4 sm:p-5 pt-3 border-t border-border/60 bg-secondary/20 animate-in fade-in slide-in-from-top-1 duration-200 space-y-4">
             <div className="p-3.5 rounded-2xl bg-card border border-border text-xs space-y-2">
               <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">{dictionary.auth.emailLabel}:</span>
@@ -346,7 +350,7 @@ export function StoreSettingsView() {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-rose-500/20 transition-all cursor-pointer shrink-0"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-foreground hover:bg-foreground/90 text-background font-bold text-xs sm:text-sm shadow-sm transition-all cursor-pointer shrink-0"
               >
                 <LogOut className="w-4 h-4" />
                 <span>{dictionary.nav.logout}</span>
@@ -356,12 +360,12 @@ export function StoreSettingsView() {
         )}
       </div>
 
-      {/* 5. Sandbox Demo Data Section */}
+      {/* 5. Sandbox Demo Data Section (Monochrome Black & White) */}
       <div
         className={`bg-card rounded-2xl sm:rounded-3xl border transition-all shadow-xs overflow-hidden ${
           openSection === "sandbox"
-            ? "border-primary/50 shadow-md shadow-indigo-500/5"
-            : "border-border hover:border-border/80"
+            ? "border-foreground/50 shadow-sm"
+            : "border-border hover:border-foreground/30"
         }`}
       >
         <button
@@ -370,7 +374,7 @@ export function StoreSettingsView() {
           className="w-full p-4 sm:p-5 flex items-center justify-between text-left cursor-pointer transition-colors"
         >
           <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-            <div className="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-2xl bg-secondary text-foreground border border-border flex items-center justify-center shrink-0">
               <Store className="w-5 h-5" />
             </div>
             <div className="min-w-0">
@@ -383,19 +387,19 @@ export function StoreSettingsView() {
             </div>
           </div>
           <div className="flex items-center gap-2.5 shrink-0 ml-3">
-            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-secondary text-foreground border border-border">
               Reset
             </span>
             <ChevronDown
               className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
-                openSection === "sandbox" ? "rotate-180 text-primary" : ""
+                openSection === "sandbox" ? "rotate-180 text-foreground" : ""
               }`}
             />
           </div>
         </button>
 
         {openSection === "sandbox" && (
-          <div className="p-4 sm:p-5 pt-3 border-t border-border/60 bg-secondary/15 animate-in fade-in slide-in-from-top-1 duration-200 space-y-3">
+          <div className="p-4 sm:p-5 pt-3 border-t border-border/60 bg-secondary/20 animate-in fade-in slide-in-from-top-1 duration-200 space-y-3">
             <p className="text-xs text-muted-foreground leading-relaxed">
               {dictionary.settings.sandboxDesc} ({INITIAL_STORE_CONFIG.storeName})
             </p>
@@ -404,7 +408,7 @@ export function StoreSettingsView() {
               onClick={handleReset}
               className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-xs sm:text-sm transition-all cursor-pointer ${
                 resetDone
-                  ? "bg-emerald-600 text-white shadow-md shadow-emerald-500/20"
+                  ? "bg-foreground text-background shadow-sm"
                   : "bg-secondary hover:bg-secondary/80 text-foreground border border-border"
               }`}
             >
