@@ -38,7 +38,7 @@ export function StoreSettingsView() {
   const { theme, setTheme } = useTheme();
   const { currency, setCurrency, user, logout, resetSandbox } = useStore();
 
-  const [openSection, setOpenSection] = useState<string | null>("currency");
+  const [openSection, setOpenSection] = useState<string | null>(null);
   const [resetDone, setResetDone] = useState(false);
 
   const toggleSection = (id: string) => {
