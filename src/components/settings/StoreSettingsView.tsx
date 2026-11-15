@@ -9,9 +9,9 @@ import {
   Coins,
   RotateCcw,
   CheckCircle2,
-  UserCheck,
   Store,
   LogOut,
+  ChevronDown,
 } from "lucide-react";
 import { INITIAL_STORE_CONFIG } from "@/data";
 import { type Locale } from "@/locales";
@@ -38,7 +38,12 @@ export function StoreSettingsView() {
   const { theme, setTheme } = useTheme();
   const { currency, setCurrency, user, logout, resetSandbox } = useStore();
 
+  const [openSection, setOpenSection] = useState<string | null>("currency");
   const [resetDone, setResetDone] = useState(false);
+
+  const toggleSection = (id: string) => {
+    setOpenSection((prev) => (prev === id ? null : id));
+  };
 
   const handleReset = () => {
     resetSandbox();
@@ -51,26 +56,51 @@ export function StoreSettingsView() {
     router.replace("/login");
   };
 
+  const currentLanguage = LANGUAGES.find((l) => l.code === locale);
+  const currentCurrency = CURRENCIES.find((c) => c.code === currency);
+
   return (
-    <div className="w-full space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {/* Currency Selection */}
-        <div className="bg-card rounded-3xl border border-border p-5 space-y-4">
-          <div className="flex items-center gap-3">
+    <div className="w-full max-w-4xl mx-auto space-y-3 sm:space-y-4">
+      {/* 1. Currency Section */}
+      <div
+        className={`bg-card rounded-2xl sm:rounded-3xl border transition-all shadow-xs overflow-hidden ${
+          openSection === "currency"
+            ? "border-primary/50 shadow-md shadow-indigo-500/5"
+            : "border-border hover:border-border/80"
+        }`}
+      >
+        <button
+          type="button"
+          onClick={() => toggleSection("currency")}
+          className="w-full p-4 sm:p-5 flex items-center justify-between text-left cursor-pointer transition-colors"
+        >
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
             <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
               <Coins className="w-5 h-5" />
             </div>
-            <div>
-              <h3 className="font-bold text-sm text-foreground">
+            <div className="min-w-0">
+              <h3 className="font-bold text-sm sm:text-base text-foreground truncate">
                 {dictionary.settings.currencyTitle}
               </h3>
-              <p className="text-[11px] text-muted-foreground">
+              <p className="text-xs text-muted-foreground truncate">
                 {dictionary.settings.currencyDesc}
               </p>
             </div>
           </div>
+          <div className="flex items-center gap-2.5 shrink-0 ml-3">
+            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+              {currentCurrency?.symbol} {currentCurrency?.code}
+            </span>
+            <ChevronDown
+              className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
+                openSection === "currency" ? "rotate-180 text-primary" : ""
+              }`}
+            />
+          </div>
+        </button>
 
-          <div className="space-y-2">
+        {openSection === "currency" && (
+          <div className="p-4 sm:p-5 pt-1 sm:pt-1 border-t border-border/60 bg-secondary/15 animate-in fade-in slide-in-from-top-1 duration-200 space-y-2">
             {CURRENCIES.map((cur) => {
               const active = currency === cur.code;
               return (
@@ -78,15 +108,15 @@ export function StoreSettingsView() {
                   key={cur.code}
                   type="button"
                   onClick={() => setCurrency(cur.code)}
-                  className={`w-full p-3 rounded-2xl border flex items-center justify-between text-left transition-all cursor-pointer ${
+                  className={`w-full p-3 sm:p-3.5 rounded-2xl border flex items-center justify-between text-left transition-all cursor-pointer ${
                     active
-                      ? "border-primary bg-primary/10 text-primary font-bold"
-                      : "border-border bg-secondary/40 text-foreground hover:border-primary/40"
+                      ? "border-primary bg-primary/10 text-primary font-bold shadow-xs"
+                      : "border-border bg-card text-foreground hover:border-primary/40"
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
                     <span
-                      className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-extrabold ${
+                      className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs font-extrabold ${
                         active
                           ? "bg-primary text-primary-foreground"
                           : "bg-secondary text-muted-foreground"
@@ -94,32 +124,56 @@ export function StoreSettingsView() {
                     >
                       {cur.symbol}
                     </span>
-                    <span className="text-xs font-bold">{cur.name}</span>
+                    <span className="text-xs sm:text-sm font-bold">{cur.name}</span>
                   </div>
                   {active && <CheckCircle2 className="w-4 h-4 text-primary" />}
                 </button>
               );
             })}
           </div>
-        </div>
+        )}
+      </div>
 
-        {/* Language Selection */}
-        <div className="bg-card rounded-3xl border border-border p-5 space-y-4">
-          <div className="flex items-center gap-3">
+      {/* 2. Language Section */}
+      <div
+        className={`bg-card rounded-2xl sm:rounded-3xl border transition-all shadow-xs overflow-hidden ${
+          openSection === "language"
+            ? "border-primary/50 shadow-md shadow-indigo-500/5"
+            : "border-border hover:border-border/80"
+        }`}
+      >
+        <button
+          type="button"
+          onClick={() => toggleSection("language")}
+          className="w-full p-4 sm:p-5 flex items-center justify-between text-left cursor-pointer transition-colors"
+        >
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
             <div className="w-10 h-10 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
               <Globe className="w-5 h-5" />
             </div>
-            <div>
-              <h3 className="font-bold text-sm text-foreground">
+            <div className="min-w-0">
+              <h3 className="font-bold text-sm sm:text-base text-foreground truncate">
                 {dictionary.settings.languageTitle}
               </h3>
-              <p className="text-[11px] text-muted-foreground">
+              <p className="text-xs text-muted-foreground truncate">
                 {dictionary.settings.languageDesc}
               </p>
             </div>
           </div>
+          <div className="flex items-center gap-2.5 shrink-0 ml-3">
+            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+              {currentLanguage?.native}
+            </span>
+            <ChevronDown
+              className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
+                openSection === "language" ? "rotate-180 text-primary" : ""
+              }`}
+            />
+          </div>
+        </button>
 
-          <div className="space-y-2">
+        {openSection === "language" && (
+          <div className="p-4 sm:p-5 pt-1 sm:pt-1 border-t border-border/60 bg-secondary/15 animate-in fade-in slide-in-from-top-1 duration-200 space-y-2">
             {LANGUAGES.map((lang) => {
               const active = locale === lang.code;
               return (
@@ -127,15 +181,15 @@ export function StoreSettingsView() {
                   key={lang.code}
                   type="button"
                   onClick={() => setLocale(lang.code)}
-                  className={`w-full p-3 rounded-2xl border flex items-center justify-between text-left transition-all cursor-pointer ${
+                  className={`w-full p-3 sm:p-3.5 rounded-2xl border flex items-center justify-between text-left transition-all cursor-pointer ${
                     active
-                      ? "border-primary bg-primary/10 text-primary font-bold"
-                      : "border-border bg-secondary/40 text-foreground hover:border-primary/40"
+                      ? "border-primary bg-primary/10 text-primary font-bold shadow-xs"
+                      : "border-border bg-card text-foreground hover:border-primary/40"
                   }`}
                 >
                   <div>
-                    <div className="text-xs font-bold">{lang.native}</div>
-                    <div className="text-[10px] text-muted-foreground">
+                    <div className="text-xs sm:text-sm font-bold">{lang.native}</div>
+                    <div className="text-[11px] text-muted-foreground">
                       {lang.title}
                     </div>
                   </div>
@@ -144,11 +198,23 @@ export function StoreSettingsView() {
               );
             })}
           </div>
-        </div>
+        )}
+      </div>
 
-        {/* Appearance Mode */}
-        <div className="bg-card rounded-3xl border border-border p-5 space-y-4">
-          <div className="flex items-center gap-3">
+      {/* 3. Appearance (Theme) Section */}
+      <div
+        className={`bg-card rounded-2xl sm:rounded-3xl border transition-all shadow-xs overflow-hidden ${
+          openSection === "theme"
+            ? "border-primary/50 shadow-md shadow-indigo-500/5"
+            : "border-border hover:border-border/80"
+        }`}
+      >
+        <button
+          type="button"
+          onClick={() => toggleSection("theme")}
+          className="w-full p-4 sm:p-5 flex items-center justify-between text-left cursor-pointer transition-colors"
+        >
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
             <div className="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0">
               {theme === "dark" ? (
                 <Moon className="w-5 h-5" />
@@ -156,128 +222,206 @@ export function StoreSettingsView() {
                 <Sun className="w-5 h-5" />
               )}
             </div>
-            <div>
-              <h3 className="font-bold text-sm text-foreground">
+            <div className="min-w-0">
+              <h3 className="font-bold text-sm sm:text-base text-foreground truncate">
                 {dictionary.settings.themeTitle}
               </h3>
-              <p className="text-[11px] text-muted-foreground">
+              <p className="text-xs text-muted-foreground truncate">
                 {dictionary.settings.themeDesc}
               </p>
             </div>
           </div>
+          <div className="flex items-center gap-2.5 shrink-0 ml-3">
+            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+              {theme === "dark"
+                ? dictionary.settings.darkMode
+                : dictionary.settings.lightMode}
+            </span>
+            <ChevronDown
+              className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
+                openSection === "theme" ? "rotate-180 text-primary" : ""
+              }`}
+            />
+          </div>
+        </button>
 
-          <div className="space-y-2">
+        {openSection === "theme" && (
+          <div className="p-4 sm:p-5 pt-1 sm:pt-1 border-t border-border/60 bg-secondary/15 animate-in fade-in slide-in-from-top-1 duration-200 space-y-2">
             <button
               type="button"
               onClick={() => setTheme("light")}
-              className={`w-full p-3.5 rounded-2xl border flex items-center justify-between text-xs font-bold transition-all cursor-pointer ${
+              className={`w-full p-3.5 rounded-2xl border flex items-center justify-between text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                 theme === "light"
-                  ? "border-primary bg-primary/10 text-primary"
-                  : "border-border bg-secondary/40 text-foreground"
+                  ? "border-primary bg-primary/10 text-primary shadow-xs"
+                  : "border-border bg-card text-foreground"
               }`}
             >
               <span className="flex items-center gap-2.5">
-                <Sun className="w-4 h-4" />
+                <Sun className="w-4 h-4 text-amber-500" />
                 {dictionary.settings.lightMode}
               </span>
-              {theme === "light" && (
-                <CheckCircle2 className="w-4 h-4 text-primary" />
-              )}
+              {theme === "light" && <CheckCircle2 className="w-4 h-4 text-primary" />}
             </button>
 
             <button
               type="button"
               onClick={() => setTheme("dark")}
-              className={`w-full p-3.5 rounded-2xl border flex items-center justify-between text-xs font-bold transition-all cursor-pointer ${
+              className={`w-full p-3.5 rounded-2xl border flex items-center justify-between text-xs sm:text-sm font-bold transition-all cursor-pointer ${
                 theme === "dark"
-                  ? "border-primary bg-primary/10 text-primary"
-                  : "border-border bg-secondary/40 text-foreground"
+                  ? "border-primary bg-primary/10 text-primary shadow-xs"
+                  : "border-border bg-card text-foreground"
               }`}
             >
               <span className="flex items-center gap-2.5">
-                <Moon className="w-4 h-4" />
+                <Moon className="w-4 h-4 text-indigo-400" />
                 {dictionary.settings.darkMode}
               </span>
-              {theme === "dark" && (
-                <CheckCircle2 className="w-4 h-4 text-primary" />
+              {theme === "dark" && <CheckCircle2 className="w-4 h-4 text-primary" />}
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* 4. Account & Profile Section */}
+      <div
+        className={`bg-card rounded-2xl sm:rounded-3xl border transition-all shadow-xs overflow-hidden ${
+          openSection === "account"
+            ? "border-primary/50 shadow-md shadow-indigo-500/5"
+            : "border-border hover:border-border/80"
+        }`}
+      >
+        <button
+          type="button"
+          onClick={() => toggleSection("account")}
+          className="w-full p-4 sm:p-5 flex items-center justify-between text-left cursor-pointer transition-colors"
+        >
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+            <div className="w-10 h-10 rounded-2xl bg-indigo-600 text-white font-extrabold text-sm flex items-center justify-center shrink-0 shadow-md shadow-indigo-500/20">
+              {user?.avatar ?? "JG"}
+            </div>
+            <div className="min-w-0">
+              <h3 className="font-bold text-sm sm:text-base text-foreground truncate">
+                {user?.name ?? dictionary.settings.accountTitle}
+              </h3>
+              <p className="text-xs text-muted-foreground truncate">
+                {user?.email}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2.5 shrink-0 ml-3">
+            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-indigo-500/10 text-primary border border-indigo-500/20">
+              {user?.role === "manager"
+                ? dictionary.auth.managerRole
+                : dictionary.auth.customerRole}
+            </span>
+            <ChevronDown
+              className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
+                openSection === "account" ? "rotate-180 text-primary" : ""
+              }`}
+            />
+          </div>
+        </button>
+
+        {openSection === "account" && (
+          <div className="p-4 sm:p-5 pt-3 border-t border-border/60 bg-secondary/15 animate-in fade-in slide-in-from-top-1 duration-200 space-y-4">
+            <div className="p-3.5 rounded-2xl bg-card border border-border text-xs space-y-2">
+              <div className="flex justify-between items-center">
+                <span className="text-muted-foreground">{dictionary.auth.emailLabel}:</span>
+                <span className="font-semibold text-foreground">{user?.email}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-muted-foreground">Phone:</span>
+                <span className="font-semibold text-foreground">{user?.phone}</span>
+              </div>
+              <div className="flex justify-between items-start gap-4">
+                <span className="text-muted-foreground shrink-0">Address:</span>
+                <span className="font-semibold text-foreground text-right">{user?.address}</span>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
+              <p className="text-xs text-muted-foreground">
+                {dictionary.settings.logoutDesc}
+              </p>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-rose-500/20 transition-all cursor-pointer shrink-0"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>{dictionary.nav.logout}</span>
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* 5. Sandbox Demo Data Section */}
+      <div
+        className={`bg-card rounded-2xl sm:rounded-3xl border transition-all shadow-xs overflow-hidden ${
+          openSection === "sandbox"
+            ? "border-primary/50 shadow-md shadow-indigo-500/5"
+            : "border-border hover:border-border/80"
+        }`}
+      >
+        <button
+          type="button"
+          onClick={() => toggleSection("sandbox")}
+          className="w-full p-4 sm:p-5 flex items-center justify-between text-left cursor-pointer transition-colors"
+        >
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+            <div className="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0">
+              <Store className="w-5 h-5" />
+            </div>
+            <div className="min-w-0">
+              <h3 className="font-bold text-sm sm:text-base text-foreground truncate">
+                {dictionary.settings.sandboxTitle}
+              </h3>
+              <p className="text-xs text-muted-foreground truncate">
+                {INITIAL_STORE_CONFIG.storeName}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2.5 shrink-0 ml-3">
+            <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+              Reset
+            </span>
+            <ChevronDown
+              className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
+                openSection === "sandbox" ? "rotate-180 text-primary" : ""
+              }`}
+            />
+          </div>
+        </button>
+
+        {openSection === "sandbox" && (
+          <div className="p-4 sm:p-5 pt-3 border-t border-border/60 bg-secondary/15 animate-in fade-in slide-in-from-top-1 duration-200 space-y-3">
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              {dictionary.settings.sandboxDesc} ({INITIAL_STORE_CONFIG.storeName})
+            </p>
+            <button
+              type="button"
+              onClick={handleReset}
+              className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-bold text-xs sm:text-sm transition-all cursor-pointer ${
+                resetDone
+                  ? "bg-emerald-600 text-white shadow-md shadow-emerald-500/20"
+                  : "bg-secondary hover:bg-secondary/80 text-foreground border border-border"
+              }`}
+            >
+              {resetDone ? (
+                <>
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>{dictionary.settings.resetConfirm}</span>
+                </>
+              ) : (
+                <>
+                  <RotateCcw className="w-4 h-4" />
+                  <span>{dictionary.settings.resetBtn}</span>
+                </>
               )}
             </button>
           </div>
-        </div>
-      </div>
-
-      {/* Active Session Account & Logout Card */}
-      <div className="bg-card rounded-3xl border border-border p-6 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-2xl bg-indigo-600 text-white font-extrabold text-sm flex items-center justify-center shrink-0 shadow-md shadow-indigo-500/20">
-            {user?.avatar ?? "JG"}
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h3 className="font-extrabold text-base text-foreground">
-                {user?.name ?? dictionary.settings.accountTitle}
-              </h3>
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-500/10 text-primary">
-                <UserCheck className="w-3 h-3" />
-                {user?.role === "manager"
-                  ? dictionary.auth.managerRole
-                  : dictionary.auth.customerRole}
-              </span>
-            </div>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              {user?.email} • {dictionary.settings.logoutDesc}
-            </p>
-          </div>
-        </div>
-
-        <button
-          type="button"
-          onClick={handleLogout}
-          className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-rose-500/20 transition-all cursor-pointer"
-        >
-          <LogOut className="w-4 h-4" />
-          <span>{dictionary.nav.logout}</span>
-        </button>
-      </div>
-
-      {/* Sandbox Data Reset Card */}
-      <div className="bg-card rounded-3xl border border-border p-6 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0">
-            <Store className="w-5 h-5" />
-          </div>
-          <div>
-            <h3 className="font-bold text-base text-foreground">
-              {dictionary.settings.sandboxTitle}
-            </h3>
-            <p className="text-xs text-muted-foreground">
-              {dictionary.settings.sandboxDesc} (
-              {INITIAL_STORE_CONFIG.storeName})
-            </p>
-          </div>
-        </div>
-
-        <button
-          type="button"
-          onClick={handleReset}
-          className={`inline-flex items-center gap-2 px-5 py-3 rounded-xl font-bold text-xs sm:text-sm transition-all cursor-pointer ${
-            resetDone
-              ? "bg-emerald-600 text-white"
-              : "bg-secondary hover:bg-secondary/80 text-foreground border border-border"
-          }`}
-        >
-          {resetDone ? (
-            <>
-              <CheckCircle2 className="w-4 h-4" />
-              <span>{dictionary.settings.resetConfirm}</span>
-            </>
-          ) : (
-            <>
-              <RotateCcw className="w-4 h-4" />
-              <span>{dictionary.settings.resetBtn}</span>
-            </>
-          )}
-        </button>
+        )}
       </div>
     </div>
   );
