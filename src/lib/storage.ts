@@ -10,7 +10,7 @@ import {
   INITIAL_ORDERS,
 } from "@/data";
 
-const STORAGE_KEY = "jgd_store_sandbox_v1";
+const STORAGE_KEY = "jgd_store_sandbox_v4";
 const SESSION_TTL_MS = 3 * 60 * 60 * 1000; // 3 hours Silent TTL Auto-Reset
 
 export interface StoreSandboxState {
@@ -26,13 +26,7 @@ export interface StoreSandboxState {
 export const SERVER_SNAPSHOT: StoreSandboxState = {
   timestamp: 0,
   products: INITIAL_PRODUCTS,
-  cart: [
-    {
-      product: INITIAL_PRODUCTS[0],
-      quantity: 1,
-      selectedVariant: INITIAL_PRODUCTS[0].variants?.[0],
-    },
-  ],
+  cart: [],
   orders: INITIAL_ORDERS,
   user: null,
   currency: "LAK",
@@ -74,7 +68,14 @@ export function getClientSnapshot(): StoreSandboxState {
       const parsed = JSON.parse(raw) as StoreSandboxState;
       const now = Date.now();
       if (parsed.timestamp && now - parsed.timestamp < SESSION_TTL_MS) {
-        cachedClientState = parsed;
+        const mergedProducts = (parsed.products || INITIAL_PRODUCTS).map((p) => ({
+          ...p,
+          image: p.image || INITIAL_PRODUCTS.find((ip) => ip.id === p.id)?.image,
+        }));
+        cachedClientState = {
+          ...parsed,
+          products: mergedProducts,
+        };
         return cachedClientState;
       }
     }

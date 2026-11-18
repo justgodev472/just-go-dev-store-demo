@@ -167,6 +167,9 @@ export const th: StoreDictionary = {
     resetConfirm: "รีเซ็ตข้อมูลสำเร็จแล้ว!",
     accountTitle: "บัญชีผู้ใช้งานปัจจุบัน",
     logoutDesc: "ออกจากระบบเพื่อกลับไปหน้า Login หรือสลับบทบาท (ลูกค้า / ผู้จัดการร้าน)",
+    switchRoleTitle: "เปลี่ยนบทบาทเป็น...",
+    switchRoleDesc: "สลับระหว่างหน้าร้านค้า (Customer) และระบบหลังบ้าน (Store Admin) ได้ทันที",
+    activeBadge: "กำลังใช้งาน",
   },
   auth: {
     title: "เข้าสู่ระบบ JustGoDev Store",

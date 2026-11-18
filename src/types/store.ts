@@ -46,6 +46,7 @@ export interface Product {
   rating: number;
   reviewsCount: number;
   badge?: "hot" | "new" | "sale";
+  image?: string;
   imageGradient: string;
   iconName: string;
   specs: string[];

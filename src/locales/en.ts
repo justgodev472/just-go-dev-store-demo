@@ -167,6 +167,9 @@ export const en: StoreDictionary = {
     resetConfirm: "Sandbox data reset complete!",
     accountTitle: "Active Session Account",
     logoutDesc: "Sign out to return to the Login screen or switch roles (Customer / Store Manager)",
+    switchRoleTitle: "Switch Role to...",
+    switchRoleDesc: "Switch seamlessly between Customer Storefront and Store Admin Backoffice",
+    activeBadge: "Active",
   },
   auth: {
     title: "Sign In to JustGoDev Store",

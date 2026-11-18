@@ -224,12 +224,21 @@ export function InventoryAdminView() {
                   <td className="py-3.5 px-4">
                     <div className="flex items-center gap-3">
                       <div
-                        className={`w-9 h-9 rounded-xl bg-gradient-to-br ${prod.imageGradient} flex items-center justify-center text-white shrink-0`}
+                        className={`w-9 h-9 rounded-xl bg-gradient-to-br ${prod.imageGradient} flex items-center justify-center text-white shrink-0 overflow-hidden`}
                       >
-                        <ProductIcon
-                          name={prod.iconName}
-                          className="w-4 h-4"
-                        />
+                        {prod.image ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={prod.image}
+                            alt={prod.name[locale]}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <ProductIcon
+                            name={prod.iconName}
+                            className="w-4 h-4"
+                          />
+                        )}
                       </div>
                       <span className="font-bold text-foreground">
                         {prod.name[locale]}

@@ -54,9 +54,27 @@ export function ProductCard({ product }: ProductCardProps) {
     >
       {/* Visual Header */}
       <div
-        className={`relative h-28 sm:h-44 bg-gradient-to-br ${product.imageGradient} flex items-center justify-center p-3 sm:p-6 overflow-hidden`}
+        className={`relative h-28 sm:h-44 bg-gradient-to-br ${product.imageGradient} flex items-center justify-center overflow-hidden`}
       >
-        <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
+        {product.image ? (
+          <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={product.image}
+              alt={product.name[locale]}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-black/20 pointer-events-none" />
+          </>
+        ) : (
+          <>
+            <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
+            <div className="w-12 h-12 sm:w-20 sm:h-20 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center text-white shadow-md sm:shadow-lg group-hover:scale-110 transition-transform duration-300">
+              <ProductIcon name={product.iconName} className="w-6 h-6 sm:w-10 sm:h-10" />
+            </div>
+          </>
+        )}
 
         {/* Top Badges */}
         <div className="absolute top-2 left-2 sm:top-3 sm:left-3 flex items-center gap-1 sm:gap-1.5 z-10">
@@ -81,16 +99,11 @@ export function ProductCard({ product }: ProductCardProps) {
             e.stopPropagation();
             setQuickViewProduct(product);
           }}
-          className="absolute top-2 right-2 sm:top-3 sm:right-3 p-1.5 sm:p-2 rounded-xl bg-white/20 hover:bg-white text-white hover:text-slate-900 backdrop-blur-md transition-all z-10 cursor-pointer"
+          className="absolute top-2 right-2 sm:top-3 sm:right-3 p-1.5 sm:p-2 rounded-xl bg-black/30 hover:bg-white text-white hover:text-slate-900 backdrop-blur-md transition-all z-10 cursor-pointer"
           title={dictionary.catalog.quickView}
         >
           <Eye className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
         </button>
-
-        {/* Center Icon Showcase */}
-        <div className="w-12 h-12 sm:w-20 sm:h-20 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center text-white shadow-md sm:shadow-lg group-hover:scale-110 transition-transform duration-300">
-          <ProductIcon name={product.iconName} className="w-6 h-6 sm:w-10 sm:h-10" />
-        </div>
 
         {/* Bottom Specs Chips (Desktop only) */}
         <div className="hidden sm:flex absolute bottom-2.5 left-3 right-3 items-center gap-1.5 overflow-hidden">

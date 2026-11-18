@@ -167,6 +167,9 @@ export interface StoreDictionary {
     resetConfirm: string;
     accountTitle: string;
     logoutDesc: string;
+    switchRoleTitle: string;
+    switchRoleDesc: string;
+    activeBadge: string;
   };
   auth: {
     title: string;

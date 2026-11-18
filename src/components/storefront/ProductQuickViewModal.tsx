@@ -59,17 +59,34 @@ export function ProductQuickViewModal() {
 
         {/* Left Artwork Panel */}
         <div
-          className={`md:col-span-5 bg-gradient-to-br ${quickViewProduct.imageGradient} p-8 flex flex-col items-center justify-center text-white relative min-h-[240px]`}
+          className={`md:col-span-5 bg-gradient-to-br ${quickViewProduct.imageGradient} flex flex-col items-center justify-center text-white relative min-h-[240px] overflow-hidden`}
         >
-          <div className="w-28 h-28 rounded-3xl bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center shadow-2xl mb-6">
-            <ProductIcon
-              name={quickViewProduct.iconName}
-              className="w-14 h-14 text-white"
-            />
-          </div>
-          <span className="font-mono text-xs px-3 py-1 rounded-full bg-black/30 backdrop-blur-xs">
-            {quickViewProduct.sku}
-          </span>
+          {quickViewProduct.image ? (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={quickViewProduct.image}
+                alt={quickViewProduct.name[locale]}
+                className="w-full h-full object-cover absolute inset-0"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+              <span className="relative z-10 mt-auto mb-4 font-mono text-xs px-3 py-1 rounded-full bg-black/50 backdrop-blur-xs">
+                {quickViewProduct.sku}
+              </span>
+            </>
+          ) : (
+            <div className="p-8 flex flex-col items-center justify-center">
+              <div className="w-28 h-28 rounded-3xl bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center shadow-2xl mb-6">
+                <ProductIcon
+                  name={quickViewProduct.iconName}
+                  className="w-14 h-14 text-white"
+                />
+              </div>
+              <span className="font-mono text-xs px-3 py-1 rounded-full bg-black/30 backdrop-blur-xs">
+                {quickViewProduct.sku}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Right Info Panel */}

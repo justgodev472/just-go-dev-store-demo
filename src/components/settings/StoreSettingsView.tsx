@@ -13,8 +13,11 @@ import {
   LogOut,
   ChevronDown,
   Check,
+  Users,
+  ShoppingBag,
+  ShieldCheck,
 } from "lucide-react";
-import { INITIAL_STORE_CONFIG } from "@/data";
+import { INITIAL_STORE_CONFIG, DEMO_USERS } from "@/data";
 import { type Locale } from "@/locales";
 import { type CurrencyCode } from "@/types/store";
 import { useLanguage } from "@/context/LanguageContext";
@@ -37,7 +40,7 @@ export function StoreSettingsView() {
   const router = useRouter();
   const { locale, setLocale, dictionary } = useLanguage();
   const { theme, setTheme } = useTheme();
-  const { currency, setCurrency, user, logout, resetSandbox } = useStore();
+  const { currency, setCurrency, user, login, logout, resetSandbox } = useStore();
 
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [resetDone, setResetDone] = useState(false);
@@ -347,7 +350,116 @@ export function StoreSettingsView() {
         )}
       </div>
 
-      {/* 4. Account & Profile Section (Monochrome Black & White) */}
+      {/* 4. Role Switcher Section ("เปลี่ยนบทบาทเป็น...") */}
+      <div
+        className={`bg-card rounded-2xl sm:rounded-3xl border transition-all shadow-xs overflow-hidden ${
+          openSection === "role"
+            ? "border-foreground/50 shadow-sm"
+            : "border-border hover:border-foreground/30"
+        }`}
+      >
+        <button
+          type="button"
+          onClick={() => toggleSection("role")}
+          className="w-full p-4 sm:p-5 flex items-center justify-between text-left cursor-pointer transition-colors"
+        >
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+            <div className="w-10 h-10 rounded-2xl bg-secondary text-foreground border border-border flex items-center justify-center shrink-0">
+              <Users className="w-5 h-5" />
+            </div>
+            <div className="min-w-0">
+              <h3 className="font-medium text-sm sm:text-base text-foreground tracking-tight truncate">
+                {dictionary.settings.switchRoleTitle}
+              </h3>
+              <p className="text-xs text-muted-foreground truncate">
+                {dictionary.settings.switchRoleDesc}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2.5 shrink-0 ml-3">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary text-foreground border border-border">
+              {user?.role === "manager"
+                ? dictionary.auth.managerRole
+                : dictionary.auth.customerRole}
+            </span>
+            <ChevronDown
+              className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${
+                openSection === "role" ? "rotate-180 text-foreground" : ""
+              }`}
+            />
+          </div>
+        </button>
+
+        {openSection === "role" && (
+          <div className="p-4 sm:p-5 pt-1 sm:pt-1 border-t border-border/60 bg-secondary/20 animate-in fade-in slide-in-from-top-1 duration-200 space-y-2">
+            {[
+              {
+                targetUser: DEMO_USERS[0],
+                label: dictionary.auth.customerRole,
+                desc: dictionary.auth.customerDesc,
+                icon: ShoppingBag,
+                redirectPath: "/shop",
+              },
+              {
+                targetUser: DEMO_USERS[1],
+                label: dictionary.auth.managerRole,
+                desc: dictionary.auth.managerDesc,
+                icon: ShieldCheck,
+                redirectPath: "/admin/dashboard",
+              },
+            ].map((item) => {
+              const active = user?.role === item.targetUser.role;
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.targetUser.id}
+                  type="button"
+                  onClick={() => {
+                    login(item.targetUser);
+                    router.push(item.redirectPath);
+                  }}
+                  className={`w-full p-3 sm:p-3.5 rounded-2xl border flex items-center justify-between text-left transition-all cursor-pointer ${
+                    active
+                      ? "border-foreground/80 bg-secondary/50 text-foreground ring-1 ring-foreground/15 shadow-xs"
+                      : "border-border bg-card text-foreground hover:border-foreground/30 hover:bg-secondary/20"
+                  }`}
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <span
+                      className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${
+                        active
+                          ? "bg-foreground text-background"
+                          : "bg-secondary text-muted-foreground"
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" />
+                    </span>
+                    <div className="min-w-0">
+                      <span className="font-medium text-xs sm:text-sm block truncate">
+                        {item.label}
+                      </span>
+                      <span className="text-[11px] text-muted-foreground block truncate">
+                        {item.desc}
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 transition-all ${
+                      active
+                        ? "bg-foreground text-background shadow-xs"
+                        : "border border-border bg-secondary/30"
+                    }`}
+                  >
+                    {active && <Check className="w-3 h-3 stroke-[3]" />}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* 5. Account & Profile Section (Monochrome Black & White) */}
       <div
         className={`bg-card rounded-2xl sm:rounded-3xl border transition-all shadow-xs overflow-hidden ${
           openSection === "account"

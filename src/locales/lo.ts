@@ -167,6 +167,9 @@ export const lo: StoreDictionary = {
     resetConfirm: "ຣີເຊັດຂໍ້ມູນສຳເລັດແລ້ວ!",
     accountTitle: "ບັນຊີຜູ້ໃຊ້ງານປັດຈຸບັນ",
     logoutDesc: "ອອກຈາກລະບົບເພື່ອກັບໄປໜ້າ Login ຫຼື ສະຫຼັບບົດບາດ (ລູກຄ້າ / ຜູ້ຈັດການຮ້ານ)",
+    switchRoleTitle: "ປ່ຽນບົດບາດເປັນ...",
+    switchRoleDesc: "ສະຫຼັບລະຫວ່າງໜ້າຮ້ານຄ້າ (Customer) ແລະ ລະບົບຫຼັງບ້ານ (Store Admin) ທັນທີ",
+    activeBadge: "ກຳລັງໃຊ້ງານ",
   },
   auth: {
     title: "ເຂົ້າສູ່ລະບົບ JustGoDev Store",

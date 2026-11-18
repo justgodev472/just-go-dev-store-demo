@@ -191,12 +191,21 @@ export function CartDrawer() {
                 className="p-3.5 rounded-2xl border border-border bg-secondary/30 flex items-center gap-3.5"
               >
                 <div
-                  className={`w-14 h-14 rounded-xl bg-gradient-to-br ${item.product.imageGradient} flex items-center justify-center text-white shrink-0`}
+                  className={`w-14 h-14 rounded-xl bg-gradient-to-br ${item.product.imageGradient} flex items-center justify-center text-white shrink-0 overflow-hidden`}
                 >
-                  <ProductIcon
-                    name={item.product.iconName}
-                    className="w-7 h-7"
-                  />
+                  {item.product.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={item.product.image}
+                      alt={item.product.name[locale]}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <ProductIcon
+                      name={item.product.iconName}
+                      className="w-7 h-7"
+                    />
+                  )}
                 </div>
 
                 <div className="flex-1 min-w-0 space-y-1">

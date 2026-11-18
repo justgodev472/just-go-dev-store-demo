@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import {
   Mail,
@@ -8,12 +8,11 @@ import {
   Eye,
   EyeOff,
   ArrowRight,
-  KeyRound,
-  CheckCircle2,
   Sun,
   Moon,
-  ShoppingBag,
-  ShieldCheck,
+  Settings,
+  Globe,
+  Check,
 } from "lucide-react";
 import { DEMO_USERS } from "@/data";
 import { type StoreUser } from "@/types/store";
@@ -26,18 +25,8 @@ interface LoginViewProps {
 }
 
 const DEMO_CREDENTIALS = [
-  {
-    user: DEMO_USERS[0],
-    pass: "cust123",
-    icon: ShoppingBag,
-    badgeColor: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400",
-  },
-  {
-    user: DEMO_USERS[1],
-    pass: "admin123",
-    icon: ShieldCheck,
-    badgeColor: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
-  },
+  { user: DEMO_USERS[0], pass: "cust123" },
+  { user: DEMO_USERS[1], pass: "admin123" },
 ];
 
 const LOCALES: { code: Locale; label: string }[] = [
@@ -50,18 +39,30 @@ export function LoginView({ onLogin }: LoginViewProps) {
   const { locale, setLocale, dictionary } = useLanguage();
   const { theme, toggleTheme } = useTheme();
 
-  const [selectedId, setSelectedId] = useState(DEMO_USERS[0].id);
   const [email, setEmail] = useState(DEMO_USERS[0].email);
   const [password, setPassword] = useState("cust123");
   const [showPassword, setShowPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
-  const handleSelectAccount = (item: (typeof DEMO_CREDENTIALS)[number]) => {
-    setSelectedId(item.user.id);
-    setEmail(item.user.email);
-    setPassword(item.pass);
-    setErrorMsg("");
-  };
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsMenuOpen(false);
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isMenuOpen]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,20 +76,18 @@ export function LoginView({ onLogin }: LoginViewProps) {
     const matched =
       DEMO_CREDENTIALS.find(
         (c) => c.user.email.toLowerCase() === email.trim().toLowerCase()
-      )?.user ??
-      DEMO_USERS.find((u) => u.id === selectedId) ??
-      DEMO_USERS[0];
+      )?.user ?? DEMO_USERS[0];
 
     onLogin(matched);
   };
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center p-4 bg-secondary/40">
-      <div className="w-full max-w-lg bg-card rounded-3xl border border-border shadow-2xl overflow-hidden p-6 sm:p-8 space-y-6">
-        {/* Top Controls: Brand & Language/Theme Switchers */}
+      <div className="w-full max-w-lg bg-card rounded-3xl border border-border shadow-2xl p-6 sm:p-8 space-y-6 relative">
+        {/* Top Controls: Brand & Single Dropdown Trigger */}
         <div className="flex items-center justify-between gap-2 pb-4 border-b border-border/80">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-10 relative flex items-center justify-center shrink-0">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-11 h-10 relative flex items-center justify-center shrink-0">
               <Image
                 src="/jgd-latets-logo-no-bg.png"
                 alt="JustGoDev Logo"
@@ -98,45 +97,93 @@ export function LoginView({ onLogin }: LoginViewProps) {
                 priority
               />
             </div>
-            <div>
-              <span className="font-extrabold text-sm tracking-tight text-foreground block">
+            <div className="min-w-0">
+              <span className="font-extrabold text-sm tracking-tight text-foreground block truncate">
                 {dictionary.brand.name}
               </span>
-              <span className="text-[11px] text-primary font-semibold">
+              <span className="text-[11px] text-primary font-semibold block truncate">
                 {dictionary.brand.subtitle}
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <div className="flex items-center bg-secondary p-1 rounded-xl border border-border">
-              {LOCALES.map((loc) => (
-                <button
-                  key={loc.code}
-                  type="button"
-                  onClick={() => setLocale(loc.code)}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${locale === loc.code
-                      ? "bg-primary text-primary-foreground shadow-2xs"
-                      : "text-muted-foreground hover:text-foreground"
-                    }`}
-                >
-                  {loc.label}
-                </button>
-              ))}
-            </div>
-
+          <div className="relative shrink-0" ref={menuRef}>
             <button
               type="button"
-              onClick={toggleTheme}
-              className="p-2 rounded-xl border border-border bg-secondary hover:bg-secondary/80 text-foreground transition-colors cursor-pointer"
-              aria-label="Toggle Theme"
+              onClick={() => setIsMenuOpen((prev) => !prev)}
+              aria-label="Language & Theme Settings"
+              className="h-9 w-9 rounded-xl border border-border bg-secondary hover:bg-secondary/80 text-foreground flex items-center justify-center transition-colors cursor-pointer"
             >
-              {theme === "dark" ? (
-                <Sun className="w-4 h-4 text-amber-400" />
-              ) : (
-                <Moon className="w-4 h-4 text-slate-600" />
-              )}
+              <Settings className="w-4 h-4" />
             </button>
+
+            {isMenuOpen && (
+              <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-card border border-border shadow-xl p-3 space-y-3 z-50 animate-in fade-in zoom-in-95 duration-150">
+                {/* Language Switcher */}
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-1.5 text-[11px] font-bold text-muted-foreground px-1">
+                    <Globe className="w-3.5 h-3.5" />
+                    <span>{dictionary.settings.languageTitle}</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-1 p-1 rounded-xl bg-secondary/60 border border-border">
+                    {LOCALES.map((loc) => (
+                      <button
+                        key={loc.code}
+                        type="button"
+                        onClick={() => setLocale(loc.code)}
+                        className={`py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                          locale === loc.code
+                            ? "bg-primary text-primary-foreground shadow-2xs"
+                            : "text-muted-foreground hover:text-foreground"
+                        }`}
+                      >
+                        {loc.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Theme Switcher */}
+                <div className="space-y-1.5 pt-2 border-t border-border/70">
+                  <div className="text-[11px] font-bold text-muted-foreground px-1">
+                    {dictionary.settings.themeTitle}
+                  </div>
+                  <div className="grid grid-cols-2 gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (theme !== "light") toggleTheme();
+                      }}
+                      className={`py-2 px-2.5 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer transition-all ${
+                        theme === "light"
+                          ? "bg-primary text-primary-foreground border-primary shadow-2xs"
+                          : "bg-secondary/50 text-foreground border-border hover:bg-secondary"
+                      }`}
+                    >
+                      <Sun className="w-3.5 h-3.5" />
+                      <span>Light</span>
+                      {theme === "light" && <Check className="w-3 h-3" />}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (theme !== "dark") toggleTheme();
+                      }}
+                      className={`py-2 px-2.5 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 cursor-pointer transition-all ${
+                        theme === "dark"
+                          ? "bg-primary text-primary-foreground border-primary shadow-2xs"
+                          : "bg-secondary/50 text-foreground border-border hover:bg-secondary"
+                      }`}
+                    >
+                      <Moon className="w-3.5 h-3.5" />
+                      <span>Dark</span>
+                      {theme === "dark" && <Check className="w-3 h-3" />}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -190,71 +237,6 @@ export function LoginView({ onLogin }: LoginViewProps) {
                 )}
               </button>
             </div>
-          </div>
-        </div>
-
-        {/* 1-Click Notice Banner */}
-        <div className="p-3.5 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-xs text-indigo-700 dark:text-indigo-300 font-medium leading-relaxed flex items-start gap-2.5">
-          <KeyRound className="w-4 h-4 shrink-0 mt-0.5 text-primary" />
-          <span>{dictionary.auth.demoNotice}</span>
-        </div>
-
-        {/* 1-Click Role Selector Cards */}
-        <div className="space-y-2.5">
-          <label className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground block">
-            {dictionary.auth.oneClickTitle}
-          </label>
-
-          <div className="grid grid-cols-1 gap-2.5">
-            {DEMO_CREDENTIALS.map((item) => {
-              const isSelected = selectedId === item.user.id;
-              const RoleIcon = item.icon;
-              const roleTitle =
-                item.user.role === "manager"
-                  ? dictionary.auth.managerRole
-                  : dictionary.auth.customerRole;
-              const roleDesc =
-                item.user.role === "manager"
-                  ? dictionary.auth.managerDesc
-                  : dictionary.auth.customerDesc;
-
-              return (
-                <button
-                  key={item.user.id}
-                  type="button"
-                  onClick={() => handleSelectAccount(item)}
-                  className={`w-full p-3.5 rounded-2xl border text-left transition-all flex items-start justify-between gap-3 cursor-pointer ${isSelected
-                      ? "border-primary bg-primary/10 ring-1 ring-primary shadow-xs"
-                      : "border-border bg-secondary/40 hover:bg-secondary/70"
-                    }`}
-                >
-                  <div className="flex items-start gap-3">
-                    <div
-                      className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 mt-0.5 ${isSelected
-                          ? "bg-primary text-primary-foreground"
-                          : item.badgeColor
-                        }`}
-                    >
-                      <RoleIcon className="w-5 h-5" />
-                    </div>
-                    <div className="space-y-0.5">
-                      <div className="font-bold text-xs sm:text-sm text-foreground flex items-center gap-2">
-                        <span>{roleTitle}</span>
-                      </div>
-                      <p className="text-[11px] text-muted-foreground leading-snug">
-                        {roleDesc}
-                      </p>
-                      <p className="text-[11px] font-mono text-primary font-semibold pt-0.5">
-                        {item.user.email} • Pass: {item.pass}
-                      </p>
-                    </div>
-                  </div>
-                  {isSelected && (
-                    <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-1" />
-                  )}
-                </button>
-              );
-            })}
           </div>
         </div>
 
